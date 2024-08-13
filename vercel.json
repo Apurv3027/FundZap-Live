@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "builds": [
+        { "src": "public/index.php", "use": "vercel-php@0.3.1" },
+        { "src": "/public/**", "use": "@vercel/static" }
+    ],
+    "routes": [
+        {
+            "src": "/(css|js)/(.*)",
+            "dest": "public/$1/$2"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "public/index.php"
+        }
+    ],
+    "env": {
+        "APP_NAME": "Vercel Laravel",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://php-laravel.vercel.app",
+        "VERCEL_DEMO_MODE": "true",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "array",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "SSR_TEMP_PATH": "/tmp/ssr",
+        "NODE_PATH": "node"
+    }
+}
