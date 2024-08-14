@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('mobile_number');
             $table->string('profile');
             $table->string('gender');
+            $table->string('token');
             $table->rememberToken();
             $table->timestamps();
         });

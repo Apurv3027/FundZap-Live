@@ -38,33 +38,12 @@ class ForgotPasswordController extends Controller
             $user = User::where('email', $request->email)->first();
 
             if ($user) {
-                // Generate a token for password reset
-                $token = Str::random(60);
-
-                // Check if email exists in the password_resets table
-                $existingReset = DB::table('password_resets')
-                    ->where('email', $request->email)
-                    ->first();
-
-                if ($existingReset) {
-                    // Email exists, delete the old record
-                    DB::table('password_resets')
-                        ->where('email', $request->email)
-                        ->delete();
-                }
-
-                // Store the email and token in the password_resets table
-                DB::table('password_resets')->updateOrInsert([
-                    'email' => $request->email,
-                    'token' => $token,
-                    'created_at' => now(),
-                ]);
-
                 return response()->json(
                     [
                         'status' => 'success',
                         'message' => 'Email exists in database',
-                        'token' => $token,
+                        'email_exists' => true,
+                        'token' => $user->token,
                     ],
                     200,
                 );
@@ -74,6 +53,7 @@ class ForgotPasswordController extends Controller
                     [
                         'status' => 'error',
                         'message' => 'email does not exist in database',
+                        'email_exists' => false,
                     ],
                     404,
                 );
@@ -109,39 +89,37 @@ class ForgotPasswordController extends Controller
                 );
             }
 
-            // Check if the email and token exist in the password_resets table
-            $passwordReset = DB::table('password_resets')
-                ->where('email', $request->email)
+            // Find the user exist with email or not
+            $user = User::where('email', $request->email)
                 ->where('token', $request->token)
                 ->first();
-
-            if (!$passwordReset) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Invalid token or email',
-                ], 400);
-            }
-
-            // Find the user exist with email or not
-            $user = User::where('email', $request->email)->first();
 
             if (!$user) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'User not found',
+                    'message' => 'Invalid token or email',
                 ], 404);
+            }
+
+            // Check if the new password is the same as the old one
+            if (Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'New password cannot be the same as the old password',
+                ], 400);
             }
 
             // Update User's Password
             $user->password = Hash::make($request->password);
             $user->save();
 
-            // Delete the password reset entry from the password_resets table
-            DB::table('password_resets')->where('email', $request->email)->delete();
-
             return response()->json([
                 'status' => 'success',
                 'message' => 'Password updated successfully',
+                'data' => [
+                    'user' => $user,
+                    'token' => $user->token,
+                ],
             ], 200);
 
         } catch (\Throwable $th) {

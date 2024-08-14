@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
         User::truncate();
 
         // Admin
-        User::create([
+        $admin = User::create([
             'first_name'        => config('const.admin.first_name'),
             'last_name'         => config('const.admin.last_name'),
             'user_name'         => config('const.admin.user_name'),
@@ -32,6 +32,12 @@ class AdminSeeder extends Seeder
             'mobile_number'     => config('const.admin.mobile_number'),
             'profile'           => config('const.admin.profile'),
             'gender'            => config('const.admin.gender'),
+            'token'             => "NULL",
         ]);
+
+        // Generate Token
+        $token = $admin->createToken('authToken')->plainTextToken;
+        $admin->token = $token; // Store the token in the remember_token field
+        $admin->save();
     }
 }

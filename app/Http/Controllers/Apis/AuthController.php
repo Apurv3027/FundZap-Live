@@ -44,14 +44,14 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                $token = $user->createToken('authToken')->accessToken;
+                // $token = $user->createToken('authToken')->accessToken;
 
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Login successful',
                     'data' => [
                         'user' => $user,
-                        'token' => $token,
+                        'token' => $user->token,
                     ],
                 ], 200);
             } else {

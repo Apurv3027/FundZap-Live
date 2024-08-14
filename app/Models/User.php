@@ -78,6 +78,13 @@ class User extends Authenticatable
         }
         $data->profile = $profilepicname;
         $data->gender = $request->gender;
+        $data->token = "NULL";
+
+        $data->save();
+
+        // Generate Token
+        $token = $data->createToken('authToken')->plainTextToken;
+        $data->token = $token;
         $data->save();
 
         return $data->toArray();
