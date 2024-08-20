@@ -27,12 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_verified',
-        'status',
-        'role_id',
-        'country_code',
         'mobile_number',
-        'profile',
-        'gender',
+        'profile_url',
     ];
 
     /**
@@ -55,38 +51,4 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public static function addUser($request)
-    {
-        $data = new User();
-        $data->first_name = $request->first_name;
-        $data->last_name = $request->last_name;
-        $data->user_name = $request->user_name;
-        $data->email = $request->email;
-        $data->password = Hash::make($request->password);
-        $data->is_verified = '1';
-        $data->status = 'Enable';
-        $data->role_id = '2';
-        $data->country_code = '+91';
-        $data->mobile_number = $request->mobile_number;
-
-        /* For Upload Profile pic */
-        $profilepicname = null;
-        if(isset($request->profile) && $request->profile !=''){
-            $profilelogo   = $request->profile;
-            $profilepicname = 'Profile-'.$request->first_name.'-'.time().'.'.$request->profile->getClientOriginalExtension();
-            $profilelogo->move(Helper::profileFileUploadPath(), $profilepicname);
-        }
-        $data->profile = $profilepicname;
-        $data->gender = $request->gender;
-        $data->token = "NULL";
-
-        $data->save();
-
-        // Generate Token
-        $token = $data->createToken('authToken')->plainTextToken;
-        $data->token = $token;
-        $data->save();
-
-        return $data->toArray();
-    }
 }

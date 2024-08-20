@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+// Upload User Image
+Route::post('/upload-user-image', [AuthController::class, 'uploadImage']);
+
 // Register User
 Route::post('/register', [AuthController::class, 'registerUser']);
 

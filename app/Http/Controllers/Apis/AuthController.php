@@ -14,6 +14,7 @@ use App\Helper\Helper;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 
 class AuthController extends Controller
 {
@@ -78,8 +79,7 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
                 'mobile_number' => 'required|numeric',
-                'profile' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-                'gender' => 'required',
+                'profile_url' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -89,14 +89,28 @@ class AuthController extends Controller
                 ], 302);
             }
 
-            // $userData = User::create($request->toarray());
-            $userData = User::addUser($request);
+            $user = new User();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->user_name = $request->user_name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->is_verified = "1";
+            $user->mobile_number = $request->mobile_number;
+            $user->profile_url = $request->profile_url;
+            $user->token = "";
+            $user->save();
+
+            // Generate Token
+            $token = $user->createToken('authToken')->plainTextToken;
+            $user->token = $token;
+            $user->save();
 
             return response()->json([
                 'code' => 200,
                 'status' => 'success',
                 'message' => 'created successfully.',
-                'data' => $userData,
+                'data' => $user,
             ], 200);
 
         }catch(\Exception $e){
@@ -104,5 +118,26 @@ class AuthController extends Controller
                 'message' => $e->getMessage(),
             ], 302);
         }
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            // Store the image in the 'public/users' directory
+            $path = $image->store('users', 'public');
+
+            // App URL
+            $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+
+            // Generate a full URL to the image
+            $url = $appurl . Storage::url($path);
+
+            // Return the full URL so it can be accessed via the API
+            return response()->json(['profile_url' => url($url)], 200);
+        }
+
+        return response()->json(['error' => 'Image upload failed'], 400);
     }
 }
