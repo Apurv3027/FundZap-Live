@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Apis\AuthController;
 use App\Http\Controllers\Apis\ForgotPasswordController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StartupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,17 @@ Route::post('/check_email', [ForgotPasswordController::class, 'checkEmail']);
 
 // Reset Password
 Route::post('/reset_password', [ForgotPasswordController::class, 'resetPassword']);
+
+
+
+// News APIs
+Route::get('/news', [NewsController::class, 'getAllNews']);    // Get all News
+Route::get('/latest-news', [NewsController::class, 'getLatestNews']);    // Get latest News
+Route::post('/upload-news-image', [NewsController::class, 'uploadNewsImage']);  // Upload News Image
+Route::post('/add-news', [NewsController::class, 'store']); // Add News
+
+// Startup APIs
+Route::get('/startups', [StartupController::class, 'getAllStartups']);    // Get all Startups
+Route::get('/most-viewed-startups', [StartupController::class, 'getMostViewedStartups']);    // Get most viewed Startups
+Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
+Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
