@@ -7,6 +7,8 @@ use App\Http\Controllers\Apis\AuthController;
 use App\Http\Controllers\Apis\ForgotPasswordController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StartupController;
+use App\Http\Controllers\VentureCapitalController;
+use App\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +54,11 @@ Route::get('/startups', [StartupController::class, 'getAllStartups']);    // Get
 Route::get('/most-viewed-startups', [StartupController::class, 'getMostViewedStartups']);    // Get most viewed Startups
 Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
 Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
+
+// Venture Capital APIs
+Route::post('/add-venture-capital', [VentureCapitalController::class, 'addVentureCapitalDetails']); // Add Venture Capital
+Route::get('/index-venture-capitals', [VentureCapitalController::class, 'indexVentureCapitals']);   // Index Venture Capitals
+Route::get('/venture-capital-details/{id}', [VentureCapitalController::class, 'getVentureCapitalDetails']);  // Get Venture Capital Details
+
+// Startup Portfolio for Venture Capital
+Route::post('/add-startup-portfolio', [PortfolioController::class, 'addStartupPortfolio']);  // Add Startup Portfolio
