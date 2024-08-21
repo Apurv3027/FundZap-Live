@@ -70,7 +70,7 @@ class StartupController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'startup_image' => 'required|string',
+                'startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'startup_name' => 'required|string',
                 'startup_valuation' => 'required|numeric',
                 'startup_equity' => 'required|numeric',
@@ -86,8 +86,25 @@ class StartupController extends Controller
                 );
             }
 
+            // Image Upload
+            if ($request->hasFile('startup_image')) {
+                $image = $request->file('startup_image');
+
+                // Store the image in the 'public/startups' directory
+                $path = $image->store('startups', 'public');
+
+                // App URL
+                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+
+                // Generate a full URL to the image
+                $imageUrl = $appurl . Storage::url($path);
+
+            } else {
+                return response()->json(['error' => 'Image upload failed'], 400);
+            }
+
             $startup = new Startup();
-            $startup->startup_image = $request->startup_image;
+            $startup->startup_image = $imageUrl;
             $startup->startup_name = $request->startup_name;
             $startup->startup_valuation = $request->startup_valuation;
             $startup->startup_equity = $request->startup_equity;

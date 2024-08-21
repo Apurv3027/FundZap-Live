@@ -89,7 +89,7 @@ class NewsController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'image_url' => 'required|string',
+                'image_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'company_name' => 'required|string',
                 'news' => 'required|string',
                 'date' => 'required|string|date_format:d/m/Y',
@@ -106,6 +106,22 @@ class NewsController extends Controller
                 );
             }
 
+            // Image Upload
+            if ($request->hasFile('image_url')) {
+                $image = $request->file('image_url');
+
+                // Store the image in the public/news directory
+                $path = $image->store('news', 'public');
+
+                // App URL
+                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+
+                // Generate a full URL to the image
+                $imageUrl = $appurl . Storage::url($path);
+            } else {
+                return response()->json(['error' => 'Image upload failed'], 400);
+            }
+
             // Check Date Format
             $date = DateTime::createFromFormat('d/m/Y', $request->date);
             if (!$date || $date->format('d/m/Y') !== $request->date) {
@@ -119,7 +135,7 @@ class NewsController extends Controller
             }
 
             $news = new News();
-            $news->image_url = $request->image_url;
+            $news->image_url = $imageUrl;
             $news->company_name = $request->company_name;
             $news->news = $request->news;
             $news->date = $date->format('Y-m-d');

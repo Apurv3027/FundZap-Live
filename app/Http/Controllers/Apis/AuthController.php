@@ -79,7 +79,7 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
                 'mobile_number' => 'required|numeric',
-                'profile_url' => 'required|string',
+                'profile_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
 
             if ($validator->fails()) {
@@ -87,6 +87,21 @@ class AuthController extends Controller
                     'status' => 'error',
                     'message' => $validator->errors()->first(),
                 ], 302);
+            }
+
+            if ($request->hasFile('profile_url')) {
+                $image = $request->file('profile_url');
+
+                // Store the image in the 'public/users' directory
+                $path = $image->store('users', 'public');
+
+                // App URL
+                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+
+                // Generate a full URL to the image
+                $imageUrl = $appurl . Storage::url($path);
+            } else {
+                return response()->json(['error' => 'Image upload failed'], 400);
             }
 
             $user = new User();
@@ -97,7 +112,7 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->is_verified = "1";
             $user->mobile_number = $request->mobile_number;
-            $user->profile_url = $request->profile_url;
+            $user->profile_url = $imageUrl;
             $user->token = "";
             $user->save();
 
