@@ -32,6 +32,9 @@ Route::post('/upload-user-image', [AuthController::class, 'uploadImage']);
 // Register User
 Route::post('/register', [AuthController::class, 'registerUser']);
 
+// Verify Email
+Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
+
 // Login User
 Route::post('/login', [AuthController::class, 'loginUser']);
 

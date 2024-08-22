@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-
     public function loginUser(Request $request)
     {
         try {
@@ -28,10 +29,13 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $validator->errors()->first(),
-                ], 400);
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => $validator->errors()->first(),
+                    ],
+                    400,
+                );
             }
 
             // Determine if login is email or username
@@ -40,38 +44,61 @@ class AuthController extends Controller
             // Attempt to log the user in
             $credentials = [
                 $login_type => $request->input('login'),
-                'password' => $request->input('password')
+                'password' => $request->input('password'),
             ];
 
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 // $token = $user->createToken('authToken')->accessToken;
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Login successful',
-                    'data' => [
-                        'user' => $user,
-                        'token' => $user->token,
+                // Check if the user's email is verified
+                if (!$user->is_verified) {
+                    // Log the user out if they are not verified
+                    Auth::logout();
+
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Your email is not verified. Please verify your email before logging in.',
+                        ],
+                        403,
+                    );
+                }
+
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Login successful',
+                        'data' => [
+                            'user' => $user,
+                            'token' => $user->token,
+                        ],
                     ],
-                ], 200);
+                    200,
+                );
             } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Invalid login credentials',
-                ], 401);
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'Invalid login credentials',
+                    ],
+                    401,
+                );
             }
         } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-            ], 500);
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ],
+                500,
+            );
         }
     }
 
     public function registerUser(Request $request)
     {
-        try{
+        try {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
@@ -83,10 +110,13 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $validator->errors()->first(),
-                ], 302);
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => $validator->errors()->first(),
+                    ],
+                    302,
+                );
             }
 
             if ($request->hasFile('profile_url')) {
@@ -109,11 +139,12 @@ class AuthController extends Controller
             $user->last_name = $request->last_name;
             $user->user_name = $request->user_name;
             $user->email = $request->email;
+            $user->verification_token = '';
             $user->password = Hash::make($request->password);
-            $user->is_verified = "1";
+            $user->is_verified = 0;
             $user->mobile_number = $request->mobile_number;
             $user->profile_url = $imageUrl;
-            $user->token = "";
+            $user->token = '';
             $user->save();
 
             // Generate Token
@@ -121,18 +152,64 @@ class AuthController extends Controller
             $user->token = $token;
             $user->save();
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'created successfully.',
-                'data' => $user,
-            ], 200);
+            // Generate Verification Token
+            $verificationToken = Str::random(60);
+            $user->verification_token = $verificationToken;
+            $user->save();
 
-        }catch(\Exception $e){
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 302);
+            // App URL
+            $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+
+            // Send Verification Email
+            // $verificationUrl = url('/verify-email/' . $verificationToken);
+            $verificationUrl = $appurl . '/verify-email/' . $verificationToken;
+            Mail::to($user->email)->send(new VerifyEmail($user, $verificationUrl));
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'created successfully.',
+                    'data' => $user,
+                ],
+                200,
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'message' => $e->getMessage(),
+                ],
+                302,
+            );
         }
+    }
+
+    public function verifyEmail($token)
+    {
+        $user = User::where('verification_token', $token)->first();
+
+        if (!$user) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Invalid verification token.',
+                ],
+                400,
+            );
+        }
+
+        $user->is_verified = 1;
+        $user->email_verified_at = Carbon::now();
+        $user->verification_token = null; // Clear the token after verification
+        $user->save();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Email verified successfully.',
+            ],
+            200,
+        );
     }
 
     public function uploadImage(Request $request)

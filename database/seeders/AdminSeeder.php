@@ -26,12 +26,8 @@ class AdminSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'password'          => Hash::make(config('const.admin.password')),
             'is_verified'       => config('const.admin.is_verified'),
-            'status'            => config('const.admin.status'),
-            'role_id'           => config('const.admin.role_id'),
-            'country_code'      => config('const.admin.country_code'),
             'mobile_number'     => config('const.admin.mobile_number'),
-            'profile'           => config('const.admin.profile'),
-            'gender'            => config('const.admin.gender'),
+            'profile_url'       => config('const.admin.profile_url'),
             'token'             => "NULL",
         ]);
 

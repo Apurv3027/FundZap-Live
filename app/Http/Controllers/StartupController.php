@@ -25,7 +25,7 @@ class StartupController extends Controller
         return response()->json(
             [
                 'status' => 'success',
-                'news' => $startups,
+                'startups' => $startups,
             ],
             200,
         );
