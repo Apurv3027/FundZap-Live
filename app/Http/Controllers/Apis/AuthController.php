@@ -52,18 +52,18 @@ class AuthController extends Controller
                 // $token = $user->createToken('authToken')->accessToken;
 
                 // Check if the user's email is verified
-                if (!$user->is_verified) {
-                    // Log the user out if they are not verified
-                    Auth::logout();
+                // if (!$user->is_verified) {
+                //     // Log the user out if they are not verified
+                //     Auth::logout();
 
-                    return response()->json(
-                        [
-                            'status' => 'error',
-                            'message' => 'Your email is not verified. Please verify your email before logging in.',
-                        ],
-                        403,
-                    );
-                }
+                //     return response()->json(
+                //         [
+                //             'status' => 'error',
+                //             'message' => 'Your email is not verified. Please verify your email before logging in.',
+                //         ],
+                //         403,
+                //     );
+                // }
 
                 return response()->json(
                     [
@@ -100,13 +100,11 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
                 'user_name' => 'required|unique:users,user_name',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'mobile_number' => 'required|numeric',
-                'profile_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'mobile_number' => 'numeric',
+                'profile' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
 
             if ($validator->fails()) {
@@ -119,32 +117,28 @@ class AuthController extends Controller
                 );
             }
 
-            if ($request->hasFile('profile_url')) {
-                $image = $request->file('profile_url');
+            // if ($request->hasFile('profile')) {
+            //     $image = $request->file('profile');
 
-                // Store the image in the 'public/users' directory
-                $path = $image->store('users', 'public');
+            //     // Store the image in the 'public/users' directory
+            //     $path = $image->store('users', 'public');
 
-                // App URL
-                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+            //     // App URL
+            //     $appurl = 'https://tortoise-new-emu.ngrok-free.app';
 
-                // Generate a full URL to the image
-                $imageUrl = $appurl . Storage::url($path);
-            } else {
-                return response()->json(['error' => 'Image upload failed'], 400);
-            }
+            //     // Generate a full URL to the image
+            //     $imageUrl = $appurl . Storage::url($path);
+            // } else {
+            //     return response()->json(['error' => 'Image upload failed'], 400);
+            // }
 
             $user = new User();
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
             $user->user_name = $request->user_name;
             $user->email = $request->email;
-            $user->verification_token = '';
             $user->password = Hash::make($request->password);
-            $user->is_verified = 0;
-            $user->mobile_number = $request->mobile_number;
-            $user->profile_url = $imageUrl;
-            $user->token = '';
+            $user->mobile_number = "";
+            $user->profile = "";
+            $user->token = "";
             $user->save();
 
             // Generate Token
@@ -153,17 +147,17 @@ class AuthController extends Controller
             $user->save();
 
             // Generate Verification Token
-            $verificationToken = Str::random(60);
-            $user->verification_token = $verificationToken;
-            $user->save();
+            // $verificationToken = Str::random(60);
+            // $user->verification_token = $verificationToken;
+            // $user->save();
 
             // App URL
-            $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+            // $appurl = 'https://tortoise-new-emu.ngrok-free.app';
 
             // Send Verification Email
             // $verificationUrl = url('/verify-email/' . $verificationToken);
-            $verificationUrl = $appurl . '/verify-email/' . $verificationToken;
-            Mail::to($user->email)->send(new VerifyEmail($user, $verificationUrl));
+            // $verificationUrl = $appurl . '/verify-email/' . $verificationToken;
+            // Mail::to($user->email)->send(new VerifyEmail($user, $verificationUrl));
 
             return response()->json(
                 [
