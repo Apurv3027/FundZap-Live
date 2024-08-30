@@ -112,7 +112,7 @@ class StartupController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
                 'startup_name' => 'required|string',
                 'startup_description' => 'required|string',
                 'startup_valuation' => 'required|numeric',

@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StartupController;
 use App\Http\Controllers\VentureCapitalController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,10 @@ Route::post('/check_email', [ForgotPasswordController::class, 'checkEmail']);
 
 // Reset Password
 Route::post('/reset_password', [ForgotPasswordController::class, 'resetPassword']);
+
+
+// Home API
+Route::get('/home', [HomeController::class, 'getHomeData']);
 
 
 
