@@ -18,6 +18,7 @@ class VentureCapital extends Model
         'vc_category',
         'vc_image',
         'vc_description',
+        'vc_url',
     ];
 
     // A Venture Capital can have many portfolios

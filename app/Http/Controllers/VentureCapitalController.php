@@ -25,6 +25,7 @@ class VentureCapitalController extends Controller
                 'vc_category' => 'required|string',
                 'vc_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'vc_description' => 'required|string',
+                'vc_url' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -58,6 +59,7 @@ class VentureCapitalController extends Controller
             $ventureCapital->vc_category = $request->vc_category;
             $ventureCapital->vc_image = $imageUrl;
             $ventureCapital->vc_description = $request->vc_description;
+            $ventureCapital->vc_url = $request->vc_url;
             $ventureCapital->save();
 
             return response()->json(
