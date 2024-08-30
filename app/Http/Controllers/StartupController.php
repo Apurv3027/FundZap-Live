@@ -17,6 +17,20 @@ use DateTime;
 
 class StartupController extends Controller
 {
+    public function exploreAllStartup()
+    {
+        // Fetch specific fields for all startups from the database
+        $startups = Startup::select('id', 'startup_image', 'startup_name', 'startup_valuation', 'startup_equity')->get();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'startups' => $startups,
+            ],
+            200,
+        );
+    }
+
     public function getAllStartups()
     {
         // Fetch all startups from the database

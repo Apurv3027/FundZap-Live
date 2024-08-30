@@ -89,7 +89,7 @@ class NewsController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'image_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'image_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
                 'company_name' => 'required|string',
                 'news' => 'required|string',
                 'date' => 'required|string|date_format:d/m/Y',
