@@ -24,6 +24,7 @@ class PortfolioController extends Controller
                 'venture_capital_id' => 'required|exists:venture_capitals,id',
                 'pf_startup_name' => 'required|string',
                 'pf_startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'pf_startup_url' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -57,6 +58,7 @@ class PortfolioController extends Controller
             $startupPortfolio->venture_capital_id = $request->venture_capital_id;
             $startupPortfolio->pf_startup_name = $request->pf_startup_name;
             $startupPortfolio->pf_startup_image = $imageUrl;
+            $startupPortfolio->pf_startup_url = $request->pf_startup_url;
             $startupPortfolio->save();
 
             return response()->json(

@@ -15,6 +15,7 @@ class Portfolio extends Model
         'venture_capital_id',
         'pf_startup_name',
         'pf_startup_image',
+        'pf_startup_url',
     ];
 
     // A Portfolio belongs to a Venture Capital
