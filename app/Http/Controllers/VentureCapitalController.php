@@ -85,7 +85,7 @@ class VentureCapitalController extends Controller
     public function indexVentureCapitals()
     {
         try {
-            $ventureCapitals = VentureCapital::select('vc_name', 'vc_image', 'vc_category')->get();
+            $ventureCapitals = VentureCapital::with('portfolios')->get();
 
             if ($ventureCapitals->isEmpty()) {
                 return response()->json(
