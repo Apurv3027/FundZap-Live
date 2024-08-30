@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('vc_category');
             $table->string('vc_image');
             $table->string('vc_description');
+            $table->string('vc_url');
             $table->timestamps();
         });
     }

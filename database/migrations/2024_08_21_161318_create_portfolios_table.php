@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('venture_capital_id'); // Foreign key
             $table->string('pf_startup_name');
             $table->string('pf_startup_image');
+            $table->string('pf_startup_url');
             $table->timestamps();
 
             // Define the foreign key constraint

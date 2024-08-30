@@ -31,6 +31,34 @@ class StartupController extends Controller
         );
     }
 
+    public function getStartup($id)
+    {
+        // Fetch the startup by ID from the database
+        $startup = Startup::find($id);
+
+        // Check if the startup exists
+        if ($startup) {
+            // Increment the view count
+            $startup->increment('startup_view_count');
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'startup' => $startup,
+                ],
+                200,
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Startup not found',
+                ],
+                404,
+            );
+        }
+    }
+
     public function getMostViewedStartups()
     {
         // Fetch the top 4 most viewed startups from the database
@@ -72,8 +100,10 @@ class StartupController extends Controller
             $validator = Validator::make($request->all(), [
                 'startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'startup_name' => 'required|string',
+                'startup_description' => 'required|string',
                 'startup_valuation' => 'required|numeric',
                 'startup_equity' => 'required|numeric',
+                'startup_url' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -98,7 +128,6 @@ class StartupController extends Controller
 
                 // Generate a full URL to the image
                 $imageUrl = $appurl . Storage::url($path);
-
             } else {
                 return response()->json(['error' => 'Image upload failed'], 400);
             }
@@ -106,9 +135,11 @@ class StartupController extends Controller
             $startup = new Startup();
             $startup->startup_image = $imageUrl;
             $startup->startup_name = $request->startup_name;
+            $startup->startup_description = $request->startup_description;
             $startup->startup_valuation = $request->startup_valuation;
             $startup->startup_equity = $request->startup_equity;
             $startup->startup_view_count = 0;
+            $startup->startup_url = $request->startup_url;
             $startup->save();
 
             return response()->json(

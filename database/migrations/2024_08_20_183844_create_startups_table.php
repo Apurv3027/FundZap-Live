@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('startup_image');
             $table->string('startup_name');
+            $table->string('startup_description');
             $table->string('startup_valuation');
             $table->string('startup_equity');
             $table->string('startup_view_count');
+            $table->string('startup_url');
             $table->timestamps();
         });
     }

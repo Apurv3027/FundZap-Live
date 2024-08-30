@@ -37,17 +37,8 @@ return array(
     // ]
 
     'admin' => [
-        'first_name'        => 'Admin',
-        'last_name'         => 'Admin',
         'user_name'         => 'admin',
         'email'             => 'admin@gmail.com',
         'password'          => 'Admin@12345',
-        'is_verified'       => 1,
-        'status'            => 'Enable',
-        'role_id'           => '1',
-        'country_code'      => '+91',
-        'mobile_number'     => '9723567600',
-        'profile_url'       => 'https://tortoise-new-emu.ngrok-free.app/storage/users/nvrYWKsflDD2ExX1D70uyWPfZXMZYYxYSetAYPsB.png',
-        'gender'            => 'Male',
     ]
 );

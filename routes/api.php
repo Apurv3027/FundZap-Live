@@ -57,6 +57,7 @@ Route::get('/startups', [StartupController::class, 'getAllStartups']);    // Get
 Route::get('/most-viewed-startups', [StartupController::class, 'getMostViewedStartups']);    // Get most viewed Startups
 Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
 Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
+Route::get('/startups/{id}', [StartupController::class, 'getStartup']); // Get Startup By ID
 
 // Venture Capital APIs
 Route::post('/add-venture-capital', [VentureCapitalController::class, 'addVentureCapitalDetails']); // Add Venture Capital

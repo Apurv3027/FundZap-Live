@@ -15,8 +15,10 @@ class Startup extends Model
     protected $fillable = [
         'startup_image',
         'startup_name',
+        'startup_description',
         'startup_valuation',
         'startup_equity',
         'startup_view_count',
+        'startup_url',
     ];
 }

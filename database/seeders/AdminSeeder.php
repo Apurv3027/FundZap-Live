@@ -19,15 +19,12 @@ class AdminSeeder extends Seeder
 
         // Admin
         $admin = User::create([
-            'first_name'        => config('const.admin.first_name'),
-            'last_name'         => config('const.admin.last_name'),
             'user_name'         => config('const.admin.user_name'),
             'email'             => config('const.admin.email'),
             'email_verified_at' => Carbon::now(),
             'password'          => Hash::make(config('const.admin.password')),
-            'is_verified'       => config('const.admin.is_verified'),
-            'mobile_number'     => config('const.admin.mobile_number'),
-            'profile_url'       => config('const.admin.profile_url'),
+            'mobile_number'     => "NULL",
+            'profile'           => "NULL",
             'token'             => "NULL",
         ]);
 
