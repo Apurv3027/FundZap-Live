@@ -1,0 +1,47 @@
+<?php
+
+return [
+    'siteName' => 'FundZap',
+    'footer' => 'FundZap | All rights reserved',
+    'error'=>"Error !!",
+    'update'=>"Updated !!",
+    "oopserror"=>"Oops, something went wrong..",
+    "somethingWrong"=>"Oops, There is some thing went wrong.Please try after some time.",
+    "recordDelete"=>"Record deleted successfully.",
+
+    "somethingWrong"=>"There is some thing went, Please try after some time.",
+    "notfoundEmail"=>"Your requested email for forgot password not found",
+    'forgotPassword'=>"We sent reset link on your registered email. So please check your mail and follow instructions",
+    "InvalidResetPassword"=>"Your reset password link may be expired OR Invalid token, Please try again using forgot password",
+    "passwordResetSuccess"=>"Your Password reset successfully",
+    "invalidCredentials"=>"Invalid Credentials",
+    "emailNotVerified"=>"Your account is not verified, Please check your email to verify your account",
+    "accountInactive"=>"Your account is inactive, Please contact administrator",
+    "notAuthorized"=>"You are not authorized user to access this account",
+    "currentPasdswordNotmatch"=>"Your current password does not matches with password you provided. Please try agian.",
+    "passwordChanged"=>"Password changed successfully",
+    "shopCreated"=>"Shop created successfully",
+    "shopdUpdate"=>"Shop updated successfully",
+    "userEmailAlreadyUsed"=>"Opps, some one already used this email as user please try with different email.",
+    "shopTimingUpdate"=>"Shop timing updated successfully",
+    'emailVerifySuccess'=>"Your account has been verified successfully. Now login in to your application",
+    'emailAlreadyVerify'=>"Your account has been already verified",
+    "InvalidToken"=>"Opps! Token is invalid",
+    "shopapprove"=>'Shop approved successfully',
+    "updatemyProfile"=>'Profile updated successfully',
+    "qrcodegenerated"=>"QR Code generated successfully",
+    "userUpdate"=>"User updated successfully",
+    "quoteAdd" => "Add successfully",
+    "formalQuoteAdd" => "formal Quote Add successfully",
+
+    /* API Messages Start */
+    'normal_regSuccess' => 'You are registered successfully. Please verify your email to activate your account',
+    'social_regSuccess'=>"You are registered successfully.",
+    'AuthenticationFail' => 'Authentication failed, Invalid login details',
+    'logout'=>"Logout successfully",
+    "emailused"=>"This email already used, please try with different email address",
+    "shopregistration"=>"shop registered successfully. we will get in touch with you within 3 working days.",
+    "qrsacnsuccessfully"=>"Congratulations.",
+    "qrcodenotfound"=>"Sorry, This QR code is not valid",
+    /* API Messages End */
+];
