@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Users')
+@section('title', 'Venture Capital')
 @section('content')
 
     <div class="page-content-wrapper">
@@ -11,7 +11,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span class="active">Users</span>
+                    <span class="active">Venture Capital</span>
                 </li>
             </ul>
             <!-- END PAGE HEADER-->
@@ -23,18 +23,26 @@
                     <div class="portlet light bordered">
                         <div class="portlet-title">
                             <div class="caption font-dark">
-                                <span class="caption-subject bold">Users Details</span>
+                                <span class="caption-subject bold">Venture Capital Details</span>
+                            </div>
+                            <div class="btn-group pull-right">
+                                <a href="#">
+                                    <button id="add_products" class="btn sbold" style="color: #FB4600">
+                                        Add New <i class="fa fa-plus"></i>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <table class="table table-striped table-bordered table-hover table-responsive" id="users-table">
+                            <table class="table table-striped table-bordered table-hover table-responsive"
+                                id="venture-capital-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>User Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile Number</th>
-                                        <th>Created At</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
+                                        <th>URL</th>
                                         <th width="100">Action</th>
                                     </tr>
                                 </thead>
@@ -55,10 +63,10 @@
 
     <script type="text/javascript">
         $(function() {
-            var table = $('#users-table').DataTable({
+            var table = $('#venture-capital-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.users') }}",
+                ajax: "{{ route('admin.venture') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -66,20 +74,20 @@
                         searchable: false
                     },
                     {
-                        data: 'user_name',
-                        name: 'user_name'
+                        data: 'vc_name',
+                        name: 'vc_name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'vc_category',
+                        name: 'vc_category'
                     },
                     {
-                        data: 'mobile_number',
-                        name: 'mobile_number'
+                        data: 'vc_description',
+                        name: 'vc_description'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at'
+                        data: 'vc_url',
+                        name: 'vc_url'
                     },
                     {
                         data: 'action',

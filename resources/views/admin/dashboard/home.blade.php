@@ -4,11 +4,24 @@
 
     <div class="page-content-wrapper">
         <div class="page-content">
-            <!-- BEGIN PAGE HEADER-->
+            {{-- <!-- BEGIN PAGE HEADER-->
             <h1 class="page-title"> Dashboard
                 <small>overview & stats</small>
             </h1>
-            <!-- END PAGE HEADER-->
+            <!-- END PAGE HEADER--> --}}
+
+            <!-- BEGIN PAGE HEAD-->
+            <div class="page-head">
+                <!-- BEGIN PAGE TITLE -->
+            </div>
+            <!-- END PAGE HEAD-->
+            <!-- BEGIN PAGE BREADCRUMB -->
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <span class="active">Dashboard</span>
+                </li>
+            </ul>
+            <!-- END PAGE BREADCRUMB -->
 
             <!-- BEGIN DASHBOARD STATS 1-->
             <div class="row">
@@ -21,7 +34,7 @@
                             <div class="number"> {{ $totalUsers }} </div>
                             <div class="desc"> New Users </div>
                         </div>
-                        <a class="more" href="#"> View more
+                        <a class="more" href="{{ route('admin.users') }}"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>
@@ -35,7 +48,7 @@
                             <div class="number"> {{ $totalNews }} </div>
                             <div class="desc"> News </div>
                         </div>
-                        <a class="more" href="#"> View more
+                        <a class="more" href="{{ route('admin.news') }}"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>
@@ -49,7 +62,7 @@
                             <div class="number"> {{ $totalPortfolio }} </div>
                             <div class="desc"> Portfolios </div>
                         </div>
-                        <a class="more" href="#"> View more
+                        <a class="more" href="{{ route('admin.portfolio') }}"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>
@@ -63,7 +76,7 @@
                             <div class="number"> {{ $totalStartup }} </div>
                             <div class="desc"> Startups </div>
                         </div>
-                        <a class="more" href="#"> View more
+                        <a class="more" href="{{ route('admin.startups') }}"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>
@@ -77,7 +90,7 @@
                             <div class="number"> {{ $totalVentureCapital }} </div>
                             <div class="desc"> Venture Capitals </div>
                         </div>
-                        <a class="more" href="#"> View more
+                        <a class="more" href="{{ route('admin.venture') }}"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>

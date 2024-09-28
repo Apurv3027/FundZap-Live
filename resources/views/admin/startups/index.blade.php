@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Users')
+@section('title', 'Startups')
 @section('content')
 
     <div class="page-content-wrapper">
@@ -11,7 +11,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span class="active">Users</span>
+                    <span class="active">Startups</span>
                 </li>
             </ul>
             <!-- END PAGE HEADER-->
@@ -23,18 +23,27 @@
                     <div class="portlet light bordered">
                         <div class="portlet-title">
                             <div class="caption font-dark">
-                                <span class="caption-subject bold">Users Details</span>
+                                <span class="caption-subject bold">Startup Details</span>
+                            </div>
+                            <div class="btn-group pull-right">
+                                <a href="#">
+                                    <button id="add_products" class="btn sbold" style="color: #FB4600">
+                                        Add New <i class="fa fa-plus"></i>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <table class="table table-striped table-bordered table-hover table-responsive" id="users-table">
+                            <table class="table table-striped table-bordered table-hover table-responsive"
+                                id="startup-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>User Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile Number</th>
-                                        <th>Created At</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Valuation</th>
+                                        <th>Equity</th>
+                                        <th>URL</th>
                                         <th width="100">Action</th>
                                     </tr>
                                 </thead>
@@ -55,10 +64,10 @@
 
     <script type="text/javascript">
         $(function() {
-            var table = $('#users-table').DataTable({
+            var table = $('#startup-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.users') }}",
+                ajax: "{{ route('admin.startups') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -66,20 +75,24 @@
                         searchable: false
                     },
                     {
-                        data: 'user_name',
-                        name: 'user_name'
+                        data: 'startup_name',
+                        name: 'startup_name'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'startup_description',
+                        name: 'startup_description'
                     },
                     {
-                        data: 'mobile_number',
-                        name: 'mobile_number'
+                        data: 'startup_valuation',
+                        name: 'startup_valuation'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at'
+                        data: 'startup_equity',
+                        name: 'startup_equity'
+                    },
+                    {
+                        data: 'startup_url',
+                        name: 'startup_url'
                     },
                     {
                         data: 'action',

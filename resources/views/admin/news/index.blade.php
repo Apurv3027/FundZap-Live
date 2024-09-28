@@ -5,52 +5,99 @@
     <div class="page-content-wrapper">
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
-            {{-- <h1 class="page-title"> News Details
-            </h1> --}}
+            <ul class="page-breadcrumb breadcrumb">
+                <li>
+                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span class="active">News</span>
+                </li>
+            </ul>
             <!-- END PAGE HEADER-->
 
-            <div class="container">
-                <h1 class="page-title">News Details</h1>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Company Name</th>
-                            <th>News</th>
-                            <th>URL</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($news as $new)
-                            <tr>
-                                <td>{{ $new->id }}</td>
-                                <td>{{ $new->company_name }}</td>
-                                {{-- <td>{{ Str::limit($new->news, 50) }}</td> --}}
-                                <td style="white-space: normal; word-wrap: break-word;">
-                                    {{ Str::limit($new->news, 50) }}
-                                </td>
-                                {{-- <td>
-                                    <a href="{{ $new->url }}" target="_blank">{{ Str::limit($new->url, 30) }}</a>
-                                </td> --}}
-                                <td style="white-space: normal; word-wrap: break-word;">
-                                    <a href="{{ $new->url }}" target="_blank">{{ Str::limit($new->url, 30) }}</a>
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($new->date)->format('d-m-Y') }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <!-- BEGIN DASHBOARD STATS 1-->
+            @include('errormessage')
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption font-dark">
+                                <span class="caption-subject bold">News Details</span>
+                            </div>
+                            <div class="btn-group pull-right">
+                                <a href="#">
+                                    <button id="add_products" class="btn sbold" style="color: #FB4600">
+                                        Add New <i class="fa fa-plus"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="table table-striped table-bordered table-hover table-responsive" id="news-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Company Name</th>
+                                        <th>News</th>
+                                        <th>URL</th>
+                                        <th>Date</th>
+                                        <th width="100">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- END DASHBOARD STATS 1-->
         </div>
     </div>
+
 @endsection
 
 @section('script')
+
+    <script type="text/javascript">
+        $(function() {
+            var table = $('#news-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.news') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name'
+                    },
+                    {
+                        data: 'news',
+                        name: 'news'
+                    },
+                    {
+                        data: 'url',
+                        name: 'url'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date',
+                        width: '75px'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
+    </script>
 
 @endsection

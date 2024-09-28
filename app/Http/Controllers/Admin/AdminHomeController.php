@@ -11,7 +11,7 @@ use App\Models\Portfolio;
 use App\Models\Startup;
 use App\Models\VentureCapital;
 
-class HomeController extends Controller
+class AdminHomeController extends Controller
 {
     public function index(){
         // Get the total number of users

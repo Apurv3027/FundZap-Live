@@ -41,6 +41,9 @@ use Illuminate\Support\Facades\Auth;
     <link href="{{ asset('admin_assets/tost/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->
 
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
 
     <!-- END THEME LAYOUT STYLES -->
     @yield('css')
@@ -117,20 +120,20 @@ use Illuminate\Support\Facades\Auth;
                             <span class="title">News</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
-                        <a href="#" class="nav-link nav-toggle">
+                    <li class="nav-item {{ Route::is('admin.portfolio') ? 'active' : '' }}">
+                        <a href="{{ route('admin.portfolio') }}" class="nav-link nav-toggle">
                             <i class="fa fa-folder-open"></i>
                             <span class="title">Portfolio</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
-                        <a href="#" class="nav-link nav-toggle">
+                    <li class="nav-item {{ Route::is('admin.startups') ? 'active' : '' }}">
+                        <a href="{{ route('admin.startups') }}" class="nav-link nav-toggle">
                             <i class="fa fa-rocket"></i>
                             <span class="title">Startups</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
-                        <a href="#" class="nav-link nav-toggle">
+                    <li class="nav-item {{ Route::is('admin.venture') ? 'active' : '' }}">
+                        <a href="{{ route('admin.venture') }}" class="nav-link nav-toggle">
                             <i class="fa fa-building"></i>
                             <span class="title">Venture Capitals</span>
                         </a>
@@ -159,97 +162,105 @@ use Illuminate\Support\Facades\Auth;
 
         <!-- BEGIN CONTENT -->
         @yield('content')
-        <!-- END CONTENT -->
-        <!-- BEGIN FOOTER -->
-        <div class="page-footer">
-            <div class="page-footer-inner"> {{ now()->year }} &copy; @lang('messages.footer')</div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
+    </div>
+    <!-- END CONTENT -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner"> {{ now()->year }} &copy; @lang('messages.footer')</div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
         </div>
-        <!-- END FOOTER -->
-        <!-- BEGIN QUICK NAV -->
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN QUICK NAV -->
 
-        <!-- END QUICK NAV -->
-        <!--[if lt IE 9]>
+    <!-- END QUICK NAV -->
+    <!--[if lt IE 9]>
         <script src="{{ url('admin_assets/global/plugins/respond.min.js') }}"></script>
         <script src="{{ url('admin_assets/global/plugins/excanvas.min.js') }}"></script>
         <script src="{{ url('admin_assets/global/plugins/ie8.fix.min.js') }}"></script>
         <![endif]-->
-        <!-- BEGIN CORE PLUGINS -->
-        <script src="{{ asset('admin_assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"
-            type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"
-            type="text/javascript"></script>
-        <!-- END CORE PLUGINS -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="{{ asset('admin_assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"
+        type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"
+        type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
 
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="{{ asset('admin_assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="{{ asset('admin_assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
 
-        <script src="{{ asset('admin_assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
-            type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/morris/morris.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/morris/raphael-min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript">
-        </script>
-        <script src="{{ asset('admin_assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript">
-        </script>
-        <script src="{{ asset('admin_assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"
-            type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"
+        type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/morris/morris.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/morris/raphael-min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript">
+    </script>
+    <script src="{{ asset('admin_assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript">
+    </script>
+    <script src="{{ asset('admin_assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"
+        type="text/javascript"></script>
 
 
-        <script src="{{ asset('admin_assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
-            type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
-            type="text/javascript"></script>
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="{{ asset('admin_assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
-        <!-- END THEME GLOBAL SCRIPTS -->
-        <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="{{ asset('admin_assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script>
-        <!-- END PAGE LEVEL SCRIPTS -->
-        <!-- BEGIN THEME LAYOUT SCRIPTS -->
-        <script src="{{ asset('admin_assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"
+        type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"
+        type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="{{ asset('admin_assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{{ asset('admin_assets/pages/scripts/dashboard.min.js') }}" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="{{ asset('admin_assets/layouts/layout4/scripts/layout.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/layouts/global/scripts/quick-sidebar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/layouts/global/scripts/quick-nav.min.js') }}" type="text/javascript"></script>
 
-        <script type="text/javascript">
-            window.baseUrl = "<?php echo URL::to('/'); ?>";
-        </script>
-        <script src="{{ asset('admin_assets/tost/toastr.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/developer/developer.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.baseUrl = "<?php echo URL::to('/'); ?>";
+    </script>
+    <script src="{{ asset('admin_assets/tost/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/developer/developer.js') }}" type="text/javascript"></script>
 
-        <!-- For Manage Timezone Start-->
 
-        <script src="{{ asset('admin_assets/developer/moment.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('admin_assets/developer/moment-timezone.js') }}" type="text/javascript"></script>
-        <script>
-            var tz = moment.tz.guess();
-            document.cookie = "headvalue=" + tz;
-            $(document).ready(function() {
-                $.ajax({
-                    url: baseUrl + '/settimezone',
-                    type: "POST",
-                    dataType: 'json',
-                    data: {
-                        timezone: tz
-                    },
-                    success: function(data) {},
-                    error: function(data) {
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-                    }
-                });
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <!-- For Manage Timezone Start-->
+
+    <script src="{{ asset('admin_assets/developer/moment.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin_assets/developer/moment-timezone.js') }}" type="text/javascript"></script>
+    <script>
+        var tz = moment.tz.guess();
+        document.cookie = "headvalue=" + tz;
+        $(document).ready(function() {
+            $.ajax({
+                url: baseUrl + '/settimezone',
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    timezone: tz
+                },
+                success: function(data) {},
+                error: function(data) {
+
+                }
             });
-        </script>
+        });
+    </script>
 
-        <!-- For Manage Timezone End-->
+    <!-- For Manage Timezone End-->
 
-        @yield('script')
+    @yield('script')
 </body>
 
 </html>

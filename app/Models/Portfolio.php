@@ -21,6 +21,6 @@ class Portfolio extends Model
     // A Portfolio belongs to a Venture Capital
     public function ventureCapital()
     {
-        return $this->belongsTo(VentureCapital::class);
+        return $this->belongsTo(VentureCapital::class, 'venture_capital_id');
     }
 }
