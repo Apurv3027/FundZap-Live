@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Login')
 @section('content')
-    <form class="login-form" action="{{ route('login') }}" method="post" id="login_form">
+    <form class="login-form" action="{{ route('login') }}" method="POST" id="login_form">
         @csrf
         <h3 class="form-title uppercase" style="color: #FB4600">Sign In</h3>
         @include('errormessage')

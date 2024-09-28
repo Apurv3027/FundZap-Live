@@ -83,6 +83,34 @@ use Illuminate\Support\Facades\Auth;
                         <li class="separator hide"> </li>
                         <!-- BEGIN TODO DROPDOWN -->
 
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user dropdown-dark">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                                data-close-others="true">
+                                <span class="username username-hide-on-mobile">
+                                    {{ Auth::user()->user_name ?? 'Guest' }} </span>
+                                <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
+                                <img alt="" class="img-circle"
+                                    src="{{ url('assets/layouts/layout4/img/avatar9.jpg') }}" /> </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-user"></i> My Profile </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="icon-key"></i> Log Out
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+
                     </ul>
                 </div>
                 <!-- END TOP NAVIGATION MENU -->
