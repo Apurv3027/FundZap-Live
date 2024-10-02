@@ -12,11 +12,6 @@ class LoginController extends Controller
 {
     protected $redirectTo = '/admin/dashboard';
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
     public function index()
     {
         return view('auth.login');
@@ -33,8 +28,15 @@ class LoginController extends Controller
 
             // Attempt to log the user in
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                // If login is successful, redirect to the dashboard
-                return redirect()->route('dashboard');
+                $user = Auth::user();
+                if ($user->email === 'admin@gmail.com') {
+                    // If login is successful, redirect to the dashboard
+                    return redirect()->route('dashboard');
+                } else {
+                    // If login fails, set an error message and redirect back
+                    session()->flash('error', trans('Access denied. Only admin can log in.'));
+                    return redirect()->back()->withInput($request->only('email'));
+                }
             } else {
                 // If login fails, set an error message and redirect back
                 session()->flash('error', trans('messages.invalidCredentials'));

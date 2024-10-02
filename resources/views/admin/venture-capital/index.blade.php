@@ -26,7 +26,7 @@
                                 <span class="caption-subject bold">Venture Capital Details</span>
                             </div>
                             <div class="btn-group pull-right">
-                                <a href="#">
+                                <a href="{{ route('admin.venture.create') }}">
                                     <button id="add_products" class="btn sbold" style="color: #FB4600">
                                         Add New <i class="fa fa-plus"></i>
                                     </button>

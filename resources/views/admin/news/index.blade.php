@@ -26,7 +26,7 @@
                                 <span class="caption-subject bold">News Details</span>
                             </div>
                             <div class="btn-group pull-right">
-                                <a href="#">
+                                <a href="{{ route('admin.news.create') }}">
                                     <button id="add_products" class="btn sbold" style="color: #FB4600">
                                         Add New <i class="fa fa-plus"></i>
                                     </button>
@@ -96,6 +96,30 @@
                         searchable: false
                     }
                 ]
+            });
+        });
+
+        window.history.replaceState({}, document.title, baseUrl + "/admin/news");
+
+        $("#delete-record").on("click", function() {
+            var id = $("#id").val();
+            $('#exampleModal').modal('hide');
+            $.ajax({
+                url: baseUrl + '/admin/news/' + id,
+                type: "DELETE",
+                dataType: 'json',
+                success: function(data) {
+                    if (data == 'Error') {
+                        toastr.error(
+                            "Oops, There is some thing went wrong.Please try after some time.");
+                    } else {
+                        toastr.success('Record Deleted Successfully.');
+                        dataTable.draw();
+                    }
+                },
+                error: function(data) {
+                    toastr.error("Invalid Request");
+                }
             });
         });
     </script>

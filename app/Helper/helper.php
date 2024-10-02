@@ -85,6 +85,25 @@ class helper {
         return $dt->format($format);
     }
 
+    public static function Action($editLink = '', $deleteID = '', $viewLink = '',$approveShopLink = '') {
+        if ($editLink)
+            $edit = '<a href="' . $editLink . '" class="btn btn-xs green"> <i class="fa fa-edit"></i></a>';
+        else
+            $edit = '';
+
+        if ($deleteID)
+            $delete = '<a onclick="deleteValueSet(' . $deleteID . ')"  class="btn btn-xs red deleterecord"  data-toggle="modal" data-target="#exampleModal" >  <i class="fa fa-trash"></i></a>';
+        else
+            $delete = '';
+
+        if ($viewLink)
+            $view = '<a href="' . $viewLink . '" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+        else
+            $view = '';
+
+        return $view . '' . $edit . '' . $delete;
+    }
+
     // public static function getAdminData()
     // {
     //     return [
