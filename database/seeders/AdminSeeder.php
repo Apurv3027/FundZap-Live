@@ -25,6 +25,7 @@ class AdminSeeder extends Seeder
             'password'          => Hash::make(config('const.admin.password')),
             'mobile_number'     => "NULL",
             'profile'           => "NULL",
+            'document_verified' => 1,
             'token'             => "NULL",
         ]);
 

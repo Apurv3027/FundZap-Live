@@ -117,20 +117,20 @@ class AuthController extends Controller
                 );
             }
 
-            // if ($request->hasFile('profile')) {
-            //     $image = $request->file('profile');
+            if ($request->hasFile('profile')) {
+                $image = $request->file('profile');
 
-            //     // Store the image in the 'public/users' directory
-            //     $path = $image->store('users', 'public');
+                // Store the image in the 'public/users/profile' directory
+                $path = $image->store('users/profile', 'public');
 
-            //     // App URL
-            //     $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+                // App URL
+                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
 
-            //     // Generate a full URL to the image
-            //     $imageUrl = $appurl . Storage::url($path);
-            // } else {
-            //     return response()->json(['error' => 'Image upload failed'], 400);
-            // }
+                // Generate a full URL to the image
+                $imageUrl = $appurl . Storage::url($path);
+            } else {
+                return response()->json(['error' => 'Image upload failed'], 400);
+            }
 
             $user = new User();
             $user->user_name = $request->user_name;
@@ -138,7 +138,9 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->mobile_number = "";
             $user->profile = "";
+            $user->document_verified = false;
             $user->token = "";
+
             $user->save();
 
             // Generate Token

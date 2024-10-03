@@ -10,6 +10,7 @@ use App\Http\Controllers\StartupController;
 use App\Http\Controllers\VentureCapitalController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserDocumentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::post('/upload-user-image', [AuthController::class, 'uploadImage']);
 
 // Register User
 Route::post('/register', [AuthController::class, 'registerUser']);
+
+// Upload User Documents
+Route::post('/upload-user-documents', [UserDocumentsController::class, 'uploadDocuments']);
 
 // Verify Email
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
