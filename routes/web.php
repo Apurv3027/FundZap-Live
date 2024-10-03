@@ -35,6 +35,7 @@ Route::get('/admin/dashboard', [AdminHomeController::class, 'index'])->name('das
 
 // Users
 Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
+Route::get('/admin/users/{id}', [AdminUserController::class, 'show'])->name('admin.users.show');
 
 // News
 Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('admin.news');
