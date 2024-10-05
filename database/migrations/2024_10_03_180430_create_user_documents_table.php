@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('email');
             $table->string('phone_number');
+            $table->string('pin_code');
             $table->string('city');
             $table->string('selfie_photo');
             $table->string('aadhar_front_image');

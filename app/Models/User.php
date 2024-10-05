@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Helper\helper;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use App\Models\UserDocuments;
 
 class User extends Authenticatable
 {
@@ -20,24 +21,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'user_name',
-        'email',
-        'password',
-        'mobile_number',
-        'profile',
-        'document_verified',
-    ];
+    protected $fillable = ['user_name', 'email', 'password', 'mobile_number', 'profile', 'document_verified'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast.
@@ -49,4 +40,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function documents()
+    {
+        return $this->hasMany(UserDocuments::class, 'user_id');
+    }
 }

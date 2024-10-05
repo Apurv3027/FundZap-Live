@@ -101,24 +101,37 @@
 
         window.history.replaceState({}, document.title, baseUrl + "/admin/news");
 
-        $("#delete-record").on("click", function() {
-            var id = $("#id").val();
-            $('#exampleModal').modal('hide');
+        $(document).on('click', '.deleterecord', function() {
+            var newsId = $(this).attr('id');
+            var button = $(this);
+            console.log('Deleting news with ID: ', newsId); // Debug
+
             $.ajax({
-                url: baseUrl + '/admin/news/' + id,
-                type: "DELETE",
-                dataType: 'json',
-                success: function(data) {
-                    if (data == 'Error') {
-                        toastr.error(
-                            "Oops, There is some thing went wrong.Please try after some time.");
+                url: '/admin/news/' + newsId + '/delete',
+                method: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}', // Ensure the CSRF token is passed
+                    id: newsId
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.message,
+                        }).then(() => {
+                            location.reload();
+                        });
                     } else {
-                        toastr.success('Record Deleted Successfully.');
-                        dataTable.draw();
+                        alert('Failed to delete news.');
                     }
                 },
-                error: function(data) {
-                    toastr.error("Invalid Request");
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong. Please try again.',
+                    });
                 }
             });
         });

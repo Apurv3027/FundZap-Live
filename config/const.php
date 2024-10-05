@@ -18,6 +18,9 @@ return array(
     'statusActive'=>1,
     'statusInActive'=>0,
 
+    'userDocumentVerify' => 1,
+    'userDocumentNotVerify' => 0,
+
     'roleSuperAdmin'=>1,
     'roleAdmin'=>2,
 

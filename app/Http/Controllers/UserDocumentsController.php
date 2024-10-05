@@ -29,6 +29,7 @@ class UserDocumentsController extends Controller
                 'last_name' => 'required|string',
                 'email' => 'required|email',
                 'phone_number' => 'required|string',
+                'pin_code' => 'required|string',
                 'city' => 'required|string',
                 'selfie_photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
                 'aadhar_front_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
@@ -87,6 +88,7 @@ class UserDocumentsController extends Controller
             $user_document->last_name = $request->last_name;
             $user_document->email = $request->email;
             $user_document->phone_number = $request->phone_number;
+            $user_document->pin_code = $request->pin_code;
             $user_document->city = $request->city;
             $user_document->selfie_photo = $selfiePhotoUrl;
             $user_document->aadhar_front_image = $aadharFrontUrl;
@@ -95,18 +97,12 @@ class UserDocumentsController extends Controller
 
             $user_document->save();
 
-            // Update user's document_verified field to true
-            $user = User::find($request->user_id);
-            $user->document_verified = true;
-            $user->save();
-
             return response()->json(
                 [
                     'code' => 200,
                     'status' => 'success',
                     'message' => 'User Documents uploaded successfully.',
                     'data' => $user_document,
-                    'document_verified' => $user->document_verified,
                 ],
                 200,
             );

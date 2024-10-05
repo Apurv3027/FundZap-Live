@@ -36,6 +36,8 @@ Route::get('/admin/dashboard', [AdminHomeController::class, 'index'])->name('das
 // Users
 Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
 Route::get('/admin/users/{id}', [AdminUserController::class, 'show'])->name('admin.users.show');
+Route::post('/admin/users/{id}/verify-documents', [AdminUserController::class, 'verifyDocuments']);
+Route::delete('/admin/users/{id}/delete', [AdminUserController::class, 'destroy'])->name('admin.users.delete');
 
 // News
 Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('admin.news');
@@ -44,6 +46,7 @@ Route::post('/admin/news/store', [AdminNewsController::class, 'store'])->name('a
 Route::get('/admin/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
 Route::put('/admin/news/{id}', [AdminNewsController::class, 'update'])->name('admin.news.update');
 Route::get('/admin/news/{id}', [AdminNewsController::class, 'show'])->name('admin.news.show');
+Route::delete('/admin/news/{id}/delete', [AdminNewsController::class, 'deleteNews'])->name('admin.news.delete');
 
 // Portfolio
 Route::get('/admin/portfolio', [AdminPortfolioController::class, 'index'])->name('admin.portfolio');

@@ -19,6 +19,7 @@ class UserDocuments extends Model
         'last_name',
         'email',
         'phone_number',
+        'pin_code',
         'city',
         'selfie_photo',
         'aadhar_front_image',
@@ -28,6 +29,6 @@ class UserDocuments extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

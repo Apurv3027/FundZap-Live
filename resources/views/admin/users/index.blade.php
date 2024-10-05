@@ -35,7 +35,8 @@
                                         <th>Email</th>
                                         <th>Mobile Number</th>
                                         <th>Created At</th>
-                                        <th width="100">Action</th>
+                                        <th>Status</th>
+                                        <th width="180">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,12 +83,124 @@
                         name: 'created_at'
                     },
                     {
+                        data: 'status',
+                        name: 'users.document_verified'
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
                     }
                 ]
+            });
+        });
+
+        // Verify User Documents
+        $(document).on('click', '.verify-documents', function() {
+            var userId = $(this).attr('user_id');
+            var button = $(this);
+
+            $.ajax({
+                url: '/admin/users/' + userId + '/verify-documents',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    user_id: userId
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                        }).then(() => {
+                            // Refresh the page after the success message is acknowledged
+                            location.reload();
+                        });
+
+                        button.replaceWith(
+                            '<button type="button" class="class="btn green btn-xs">Verified</button>'
+                        );
+                    } else {
+                        alert('Failed to verify documents.');
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.status === 'error') {
+                        // Error message (No documents found)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: xhr.responseJSON.message,
+                        });
+                    } else {
+                        // Generic error handling
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong. Please try again.',
+                        });
+                    }
+                },
+            });
+        });
+
+        // Delete User Data
+        $(document).on('click', '.deleterecord', function() {
+            var userId = $(this).attr('id');
+            var button = $(this);
+
+            // Show confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will permanently delete the user and their documents!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, make the AJAX DELETE request
+                    $.ajax({
+                        url: '/admin/users/' + userId + '/delete',
+                        method: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}', // Ensure the CSRF token is passed
+                            user_id: userId
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Deleted!',
+                                    text: response.message,
+                                }).then(() => {
+                                    location.reload(); // Refresh the page after success
+                                });
+                            } else {
+                                alert('Failed to delete user.');
+                            }
+                        },
+                        error: function(xhr) {
+                            if (xhr.responseJSON && xhr.responseJSON.status === 'error') {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: xhr.responseJSON.message,
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong. Please try again.',
+                                });
+                            }
+                        },
+                    });
+                }
             });
         });
     </script>

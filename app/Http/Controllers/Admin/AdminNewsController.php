@@ -118,7 +118,9 @@ class AdminNewsController extends Controller
             //     200,
             // );
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -213,11 +215,13 @@ class AdminNewsController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $data = News::where('id', $id)->delete();
-            return Response::json($data);
-        } catch (\Exception $e) {
-            Log::error('AdminNewsController->destroy' . $e->getCode());
-        }
+        $news = News::findOrFail($id);
+
+        $news->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'News deleted successfully.',
+        ]);
     }
 }
