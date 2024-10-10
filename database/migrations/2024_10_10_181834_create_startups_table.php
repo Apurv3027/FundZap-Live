@@ -13,13 +13,25 @@ return new class extends Migration
     {
         Schema::create('startups', function (Blueprint $table) {
             $table->id();
-            $table->string('startup_image');
+            $table->string('startup_image')->nullable();
             $table->string('startup_name');
-            $table->string('startup_description');
+            $table->year('year');
+            $table->string('location');
+            $table->string('total_funding');
+            $table->string('latest_funding');
+            $table->string('latest_investor');
+            $table->integer('total_investor');
+            $table->integer('funding_round');
+            $table->string('post_money_valuation');
+            $table->integer('employee_count');
+            $table->text('startup_description');
             $table->string('startup_valuation');
             $table->string('startup_equity');
             $table->string('startup_view_count');
             $table->string('startup_url');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->date('first_covered');
             $table->timestamps();
         });
     }

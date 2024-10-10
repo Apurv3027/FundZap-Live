@@ -11,6 +11,10 @@ use App\Http\Controllers\VentureCapitalController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserDocumentsController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ValuationController;
+use App\Http\Controllers\FundingRoundController;
+use App\Http\Controllers\CompetitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,12 +66,24 @@ Route::post('/upload-news-image', [NewsController::class, 'uploadNewsImage']);  
 Route::post('/add-news', [NewsController::class, 'store']); // Add News
 
 // Startup APIs
-Route::get('/startups', [StartupController::class, 'getAllStartups']);    // Get all Startups
-Route::get('/most-viewed-startups', [StartupController::class, 'getMostViewedStartups']);    // Get most viewed Startups
-Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
-Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
-Route::get('/startups/{id}', [StartupController::class, 'getStartup']); // Get Startup By ID
-Route::get('/explore-all-startup', [StartupController::class, 'exploreAllStartup']); // Explore all Startups
+Route::post('/startups', [StartupController::class, 'addStartup']);
+Route::get('/startups/{id}', [StartupController::class, 'show']);
+
+// Startup Valuation
+Route::post('/valuation', [ValuationController::class, 'addValuation']);
+
+// Startup Founding Round
+Route::post('/funding-round', [FundingRoundController::class, 'addFundingRound']);
+
+// Startup Competitor
+Route::post('/competitor', [CompetitorController::class, 'addCompetitor']);
+
+// Route::get('/startups', [StartupController::class, 'getAllStartups']);    // Get all Startups
+// Route::get('/most-viewed-startups', [StartupController::class, 'getMostViewedStartups']);    // Get most viewed Startups
+// Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
+// Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
+// Route::get('/startups/{id}', [StartupController::class, 'getStartup']); // Get Startup By ID
+// Route::get('/explore-all-startup', [StartupController::class, 'exploreAllStartup']); // Explore all Startups
 
 // Venture Capital APIs
 Route::post('/add-venture-capital', [VentureCapitalController::class, 'addVentureCapitalDetails']); // Add Venture Capital
@@ -76,3 +92,8 @@ Route::get('/venture-capital-details/{id}', [VentureCapitalController::class, 'g
 
 // Startup Portfolio for Venture Capital
 Route::post('/add-startup-portfolio', [PortfolioController::class, 'addStartupPortfolio']);  // Add Startup Portfolio
+
+
+// Orders
+Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/orders/{user_id}', [OrderController::class, 'show']);

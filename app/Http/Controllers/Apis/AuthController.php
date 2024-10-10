@@ -103,8 +103,8 @@ class AuthController extends Controller
                 'user_name' => 'required|unique:users,user_name',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'mobile_number' => 'numeric',
-                'profile' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'mobile_number' => 'nullable|numeric',
+                'profile' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
 
             if ($validator->fails()) {
@@ -117,27 +117,30 @@ class AuthController extends Controller
                 );
             }
 
-            if ($request->hasFile('profile')) {
-                $image = $request->file('profile');
+            $imageUrl = null;
+            if ($request->profile) {
+                if ($request->hasFile('profile')) {
+                    $image = $request->file('profile');
 
-                // Store the image in the 'public/users/profile' directory
-                $path = $image->store('users/profile', 'public');
+                    // Store the image in the 'public/users/profile' directory
+                    $path = $image->store('users/profile', 'public');
 
-                // App URL
-                $appurl = 'https://tortoise-new-emu.ngrok-free.app';
+                    // App URL
+                    $appurl = 'https://tortoise-new-emu.ngrok-free.app';
 
-                // Generate a full URL to the image
-                $imageUrl = $appurl . Storage::url($path);
-            } else {
-                return response()->json(['error' => 'Image upload failed'], 400);
+                    // Generate a full URL to the image
+                    $imageUrl = $appurl . Storage::url($path);
+                } else {
+                    return response()->json(['error' => 'Image upload failed'], 400);
+                }
             }
 
             $user = new User();
             $user->user_name = $request->user_name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->mobile_number = "";
-            $user->profile = "";
+            $user->mobile_number = $request->mobile_number ?? "";
+            $user->profile = '';
             $user->document_verified = false;
             $user->token = "";
 

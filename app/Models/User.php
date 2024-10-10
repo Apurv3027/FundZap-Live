@@ -11,6 +11,7 @@ use App\Helper\helper;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\UserDocuments;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -43,5 +44,15 @@ class User extends Authenticatable
     public function documents()
     {
         return $this->hasMany(UserDocuments::class, 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function isAdmin()
+    {
+        return false;
     }
 }
