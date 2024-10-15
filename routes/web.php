@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\AdminVentureCapitalController;
 use App\Http\Controllers\Admin\AdminCompetitorController;
 use App\Http\Controllers\Admin\AdminValuationController;
 use App\Http\Controllers\Admin\AdminFundingRoundController;
+use App\Http\Controllers\Admin\AdminInvestmentController;
+use App\Http\Controllers\Admin\AdminSectorController;
+use App\Http\Controllers\Admin\AdminCountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +55,12 @@ Route::get('/admin/news/{id}', [AdminNewsController::class, 'show'])->name('admi
 Route::delete('/admin/news/{id}/delete', [AdminNewsController::class, 'deleteNews'])->name('admin.news.delete');
 
 // Portfolio
-Route::get('/admin/portfolio', [AdminPortfolioController::class, 'index'])->name('admin.portfolio');
-Route::get('/admin/portfolio/create', [AdminPortfolioController::class, 'create'])->name('admin.portfolio.create');
-Route::post('/admin/portfolio/store', [AdminPortfolioController::class, 'store'])->name('admin.portfolio.store');
-Route::get('/admin/portfolio/{id}/edit', [AdminPortfolioController::class, 'edit'])->name('admin.portfolio.edit');
-Route::put('/admin/portfolio/{id}', [AdminPortfolioController::class, 'update'])->name('admin.portfolio.update');
-Route::get('/admin/portfolio/{id}', [AdminPortfolioController::class, 'show'])->name('admin.portfolio.show');
+// Route::get('/admin/portfolio', [AdminPortfolioController::class, 'index'])->name('admin.portfolio');
+// Route::get('/admin/portfolio/create', [AdminPortfolioController::class, 'create'])->name('admin.portfolio.create');
+// Route::post('/admin/portfolio/store', [AdminPortfolioController::class, 'store'])->name('admin.portfolio.store');
+// Route::get('/admin/portfolio/{id}/edit', [AdminPortfolioController::class, 'edit'])->name('admin.portfolio.edit');
+// Route::put('/admin/portfolio/{id}', [AdminPortfolioController::class, 'update'])->name('admin.portfolio.update');
+// Route::get('/admin/portfolio/{id}', [AdminPortfolioController::class, 'show'])->name('admin.portfolio.show');
 
 // Startups
 Route::get('/admin/startups', [AdminStartupController::class, 'index'])->name('admin.startups');
@@ -86,6 +89,22 @@ Route::post('/admin/venture/store', [AdminVentureCapitalController::class, 'stor
 Route::get('/admin/venture/{id}/edit', [AdminVentureCapitalController::class, 'edit'])->name('admin.venture.edit');
 Route::put('/admin/venture/{id}', [AdminVentureCapitalController::class, 'update'])->name('admin.venture.update');
 Route::get('/admin/venture/{id}', [AdminVentureCapitalController::class, 'show'])->name('admin.venture.show');
+
+// Venture Capitals/Investments
+Route::get('/admin/venture/{venture_capital_id}/investments/create', [AdminInvestmentController::class, 'create'])->name('admin.venture.investments.create');
+Route::post('/admin/venture/{venture_capital_id}/investments/store', [AdminInvestmentController::class, 'store'])->name('admin.venture.investments.store');
+
+// Venture Capitals/Sectors
+Route::get('/admin/venture/{venture_capital_id}/sectors/create', [AdminSectorController::class, 'create'])->name('admin.venture.sectors.create');
+Route::post('/admin/venture/{venture_capital_id}/sectors/store', [AdminSectorController::class, 'store'])->name('admin.venture.sectors.store');
+
+// Venture Capitals/Country
+Route::get('/admin/venture/{venture_capital_id}/countries/create', [AdminCountryController::class, 'create'])->name('admin.venture.countries.create');
+Route::post('/admin/venture/{venture_capital_id}/countries/store', [AdminCountryController::class, 'store'])->name('admin.venture.countries.store');
+
+// Venture Capitals/Portfolios
+Route::get('/admin/venture/{venture_capital_id}/portfolios/create', [AdminPortfolioController::class, 'create'])->name('admin.venture.portfolios.create');
+Route::post('/admin/venture/{venture_capital_id}/portfolios/store', [AdminPortfolioController::class, 'store'])->name('admin.venture.portfolios.store');
 
 // Verify Email
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);

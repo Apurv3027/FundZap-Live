@@ -62,7 +62,7 @@
                             <div class="number"> {{ $totalPortfolio }} </div>
                             <div class="desc"> Portfolios </div>
                         </div>
-                        <a class="more" href="{{ route('admin.portfolio') }}"> View more
+                        <a class="more" href="#"> View more
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>

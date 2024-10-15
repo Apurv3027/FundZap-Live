@@ -32,7 +32,6 @@ class AdminVentureCapitalController extends Controller
                     return '<a href="' . $startup->vc_url . '" target="_blank">' . $startup->vc_url . '</a>';
                 })
                 ->addColumn('action', function ($n) {
-
                     $editLink = URL::to('/') . '/admin/venture/' . $n->id . '/edit';
                     $viewLink = URL::to('/') . '/admin/venture/' . $n->id;
 
@@ -66,10 +65,20 @@ class AdminVentureCapitalController extends Controller
             // Validate the request
             $validator = Validator::make($request->all(), [
                 'vc_name' => 'required|string',
+                'subtitle' => 'nullable|string',
                 'vc_category' => 'required|string',
                 'vc_image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'vc_description' => 'required|string',
                 'vc_url' => 'required|url',
+                'team_member' => 'nullable|string',
+                'founded_year' => 'nullable|integer|digits:4',
+                'portfolio_count' => 'nullable|integer|min:0',
+                'portfolio_sector' => 'nullable|string',
+                'portfolio_location' => 'nullable|string',
+                'portfolio_unicorns' => 'nullable|integer|min:0',
+                'deals_12_month' => 'nullable|integer|min:0',
+                'status' => 'nullable|string',
+                'is_seed' => 'nullable|boolean',
             ]);
 
             // Handle validation failure
@@ -96,10 +105,20 @@ class AdminVentureCapitalController extends Controller
             // Create a new VentureCapital entry
             $ventureCapital = new VentureCapital();
             $ventureCapital->vc_name = $request->vc_name;
+            $ventureCapital->subtitle = $request->subtitle;
             $ventureCapital->vc_category = $request->vc_category;
             $ventureCapital->vc_image = $imageUrl;
             $ventureCapital->vc_description = $request->vc_description;
             $ventureCapital->vc_url = $request->vc_url;
+            $ventureCapital->team_member = $request->team_member;
+            $ventureCapital->founded_year = $request->founded_year;
+            $ventureCapital->portfolio_count = $request->portfolio_count;
+            $ventureCapital->portfolio_sector = $request->portfolio_sector;
+            $ventureCapital->portfolio_location = $request->portfolio_location;
+            $ventureCapital->portfolio_unicorns = $request->portfolio_unicorns;
+            $ventureCapital->deals_12_month = $request->deals_12_month;
+            $ventureCapital->status = $request->status;
+            $ventureCapital->is_seed = $request->is_seed;
 
             // Save the new venture capital record
             $ventureCapital->save();
@@ -108,7 +127,9 @@ class AdminVentureCapitalController extends Controller
             return redirect()->route('admin.venture')->with('success', 'Venture Capital created successfully.');
         } catch (\Exception $e) {
             // Handle unexpected errors
-            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -122,6 +143,10 @@ class AdminVentureCapitalController extends Controller
         // Remove the base URL if present in vc_image
         $ventureCapital->vc_image = str_replace('https://tortoise-new-emu.ngrok-free.app/', '', $ventureCapital->vc_image);
 
+        foreach ($ventureCapital->portfolios as $portfolio) {
+            $portfolio->pf_startup_image = str_replace('https://tortoise-new-emu.ngrok-free.app/', '', $portfolio->pf_startup_image);
+        }
+        
         return view('admin.venture-capital.show', compact('ventureCapital'));
     }
 

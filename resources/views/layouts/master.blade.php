@@ -167,7 +167,7 @@ use Illuminate\Support\Facades\Auth;
                         </a>
                     </li>
                     <li
-                        class="nav-item {{ Route::is('admin.venture') || Route::is('admin.venture.create') || Route::is('admin.venture.edit') || Route::is('admin.venture.show') ? 'active' : '' }}">
+                        class="nav-item {{ Route::is('admin.venture') || Route::is('admin.venture.create') || Route::is('admin.venture.edit') || Route::is('admin.venture.show') || Route::is('admin.venture.investments.create') || Route::is('admin.venture.sectors.create') || Route::is('admin.venture.countries.create') || Route::is('admin.venture.portfolios.create') ? 'active' : '' }}">
                         <a href="{{ route('admin.venture') }}" class="nav-link nav-toggle">
                             <i class="fa fa-building"></i>
                             <span class="title">Venture Capitals</span>

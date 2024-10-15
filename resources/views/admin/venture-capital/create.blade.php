@@ -53,6 +53,13 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Subtitle:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('subtitle', null, ['class' => 'form-control', 'placeholder' => 'Enter Subtitle']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Category:<span class="required">*</span></label>
                                     <div class="col-md-6">
                                         {!! Form::text('vc_category', null, ['class' => 'form-control', 'placeholder' => 'Enter Category']) !!}
@@ -76,9 +83,118 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Founded Year:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('founded_year', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Founded Year',
+                                            'min' => 1900,
+                                            'max' => date('Y'),
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Team Members:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('team_member', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Number of Team Members',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Portfolio Count:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('portfolio_count', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Portfolio Count',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Portfolio Sector:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('portfolio_sector', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Portfolio Sector',
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Portfolio Location:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('portfolio_location', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Portfolio Location',
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Portfolio Unicorns:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('portfolio_unicorns', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Number of Portfolio Unicorns',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Deals in Last 12 Months:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('deals_12_month', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Enter Number of Deals',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Status:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::select(
+                                            'status',
+                                            [
+                                                'VC' => 'VC',
+                                                'AN' => 'AN',
+                                                'SFO' => 'SFO',
+                                                'PDF' => 'PDF',
+                                                'SIF' => 'SIF',
+                                            ],
+                                            null,
+                                            ['class' => 'form-control'],
+                                        ) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Is Seed:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::select('is_seed', [1 => 'Yes', 0 => 'No'], null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Image:<span class="required">*</span></label>
                                     <div class="col-md-6">
-                                        <input type="file" name="vc_image" accept="image/*" class="form-control">
+                                        <input type="file" name="vc_image" accept="image/*" class="form-control"
+                                            required>
                                         @error('vc_image')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

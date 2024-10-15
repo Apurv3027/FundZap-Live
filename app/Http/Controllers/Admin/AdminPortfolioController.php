@@ -26,8 +26,7 @@ class AdminPortfolioController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $portfolio = Portfolio::with('ventureCapital:id,vc_name')
-                                ->select(['id', 'venture_capital_id', 'pf_startup_name', 'pf_startup_url']);
+            $portfolio = Portfolio::with('ventureCapital:id,vc_name')->select(['id', 'venture_capital_id', 'pf_startup_name', 'pf_startup_url']);
             return DataTables::of($portfolio)
                 ->addIndexColumn()
                 ->editColumn('venture_capital_id', function ($portfolio) {
@@ -38,7 +37,6 @@ class AdminPortfolioController extends Controller
                     return '<a href="' . $ne->pf_startup_url . '" target="_blank">' . $ne->pf_startup_url . '</a>';
                 })
                 ->addColumn('action', function ($n) {
-
                     $editLink = URL::to('/') . '/admin/portfolio/' . $n->id . '/edit';
                     $viewLink = URL::to('/') . '/admin/portfolio/' . $n->id;
 
@@ -55,23 +53,33 @@ class AdminPortfolioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($venture_capital_id)
     {
-        $ventureCapitals = VentureCapital::all();
-        return view('admin.portfolio.create', compact('ventureCapitals'));
+        $venture_capital = VentureCapital::findOrFail($venture_capital_id);
+
+        return view('admin.venture-capital.portfolio', compact('venture_capital_id', 'venture_capital'));
+
+        // $ventureCapitals = VentureCapital::all();
+        // return view('admin.portfolio.create', compact('ventureCapitals'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $venture_capital_id)
     {
         try {
             $validator = Validator::make($request->all(), [
                 'venture_capital_id' => 'required|exists:venture_capitals,id',
-                'pf_startup_name' => 'required|string',
-                'pf_startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-                'pf_startup_url' => 'required|string',
+                'pf_startup_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'pf_startup_name' => 'required|string|max:255',
+                'subtitle' => 'required|string|max:255',
+                'pf_startup_url' => 'required|url',
+                'founded_year' => 'required|integer|digits:4',
+                'funding' => 'required|numeric|min:0',
+                'location' => 'required|string|max:255',
+                'investor' => 'required|string|max:255',
+                'stage' => 'required|string|max:255',
             ]);
 
             if ($validator->fails()) {
@@ -97,19 +105,26 @@ class AdminPortfolioController extends Controller
                     ->withErrors(['image' => 'Image upload failed']);
             }
 
-            $startupPortfolio = new Portfolio();
-            $startupPortfolio->venture_capital_id = $request->venture_capital_id;
-            $startupPortfolio->pf_startup_name = $request->pf_startup_name;
-            $startupPortfolio->pf_startup_image = $imageUrl;
-            $startupPortfolio->pf_startup_url = $request->pf_startup_url;
+            $portfolio = new Portfolio();
+            $portfolio->venture_capital_id = $venture_capital_id;
+            $portfolio->pf_startup_image = $imageUrl;
+            $portfolio->pf_startup_name = $request->pf_startup_name;
+            $portfolio->subtitle = $request->subtitle;
+            $portfolio->pf_startup_url = $request->pf_startup_url;
+            $portfolio->founded_year = $request->founded_year;
+            $portfolio->funding = $request->funding;
+            $portfolio->location = $request->location;
+            $portfolio->investor = $request->investor;
+            $portfolio->stage = $request->stage;
 
-            $startupPortfolio->save();
+            $portfolio->save();
 
             // Redirect with success message
-            return redirect()->route('admin.portfolio')->with('success', 'Portfolio created successfully.');
-
+            return redirect()->route('admin.venture.show', ['id' => $venture_capital_id])->with('success', 'Portfolio created successfully.');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => $e->getMessage()]);
         }
     }
 
