@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('venture_capitals', function (Blueprint $table) {
+        Schema::create('sectors', function (Blueprint $table) {
             $table->id();
-            $table->string('vc_name');
-            $table->string('vc_category');
-            $table->string('vc_image');
-            $table->string('vc_description');
-            $table->string('vc_url');
+            $table->foreignId('venture_capital_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->integer('value');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('venture_capitals');
+        Schema::dropIfExists('sectors');
     }
 };

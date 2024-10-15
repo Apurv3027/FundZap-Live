@@ -203,6 +203,7 @@ class StartupController extends Controller
 
         return response()->json([
             'data' => [
+                'id' => $startup->id,
                 'image_url' => $startup->startup_image,
                 'name' => $startup->startup_name,
                 'year' => $startup->year,
@@ -221,6 +222,8 @@ class StartupController extends Controller
                 'post_money_valuation' => $startup->post_money_valuation,
                 'Employee' => $startup->employee_count,
                 'description' => $startup->startup_description,
+                'startup_valuation' => $startup->startup_valuation,
+                'startup_equity' => $startup->startup_equity,
                 'url' => $startup->startup_url,
                 'email' => $startup->email,
                 'phone_number' => $startup->phone_number,

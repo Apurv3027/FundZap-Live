@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('venture_capital_id'); // Foreign key
+            $table->foreignId('venture_capital_id')->constrained()->onDelete('cascade');
+            $table->string('pf_startup_image')->nullable();
             $table->string('pf_startup_name');
-            $table->string('pf_startup_image');
+            $table->string('subtitle')->nullable();
             $table->string('pf_startup_url');
+            $table->year('founded_year');
+            $table->string('funding');
+            $table->string('location');
+            $table->string('investor');
+            $table->string('stage');
             $table->timestamps();
-
-            // Define the foreign key constraint
-            $table->foreign('venture_capital_id')
-                  ->references('id')
-                  ->on('venture_capitals')
-                  ->onDelete('cascade'); // Delete portfolio if related venture capital is deleted
         });
     }
 

@@ -15,6 +15,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ValuationController;
 use App\Http\Controllers\FundingRoundController;
 use App\Http\Controllers\CompetitorController;
+use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\SectorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +71,7 @@ Route::post('/add-news', [NewsController::class, 'store']); // Add News
 // Startup APIs
 Route::post('/startups', [StartupController::class, 'addStartup']);
 Route::get('/startups/{id}', [StartupController::class, 'show']);
+Route::get('/explore-all-startup', [StartupController::class, 'exploreAllStartup']); // Explore all Startups
 
 // Startup Valuation
 Route::post('/valuation', [ValuationController::class, 'addValuation']);
@@ -83,12 +87,20 @@ Route::post('/competitor', [CompetitorController::class, 'addCompetitor']);
 // Route::post('/upload-startup-image', [StartupController::class, 'uploadStartupImage']);  // Upload Startup Image
 // Route::post('/add-startup', [StartupController::class, 'addStartup']); // Add Startup
 // Route::get('/startups/{id}', [StartupController::class, 'getStartup']); // Get Startup By ID
-// Route::get('/explore-all-startup', [StartupController::class, 'exploreAllStartup']); // Explore all Startups
 
 // Venture Capital APIs
 Route::post('/add-venture-capital', [VentureCapitalController::class, 'addVentureCapitalDetails']); // Add Venture Capital
 Route::get('/index-venture-capitals', [VentureCapitalController::class, 'indexVentureCapitals']);   // Index Venture Capitals
 Route::get('/venture-capital-details/{id}', [VentureCapitalController::class, 'getVentureCapitalDetails']);  // Get Venture Capital Details
+
+// Investment
+Route::post('/add-investment', [InvestmentController::class, 'addInvestment']);
+
+// Country
+Route::post('/add-countries', [CountryController::class, 'addCountry']);
+
+// Sector
+Route::post('/add-sector', [SectorController::class, 'addSector']);
 
 // Startup Portfolio for Venture Capital
 Route::post('/add-startup-portfolio', [PortfolioController::class, 'addStartupPortfolio']);  // Add Startup Portfolio

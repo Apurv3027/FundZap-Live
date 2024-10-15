@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Portfolio;
 use App\Models\VentureCapital;
 use Illuminate\Http\Request;
@@ -18,13 +17,20 @@ use DateTime;
 
 class PortfolioController extends Controller
 {
-    public function addStartupPortfolio(Request $request) {
+    public function addStartupPortfolio(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'venture_capital_id' => 'required|exists:venture_capitals,id',
                 'pf_startup_name' => 'required|string',
                 'pf_startup_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'pf_startup_url' => 'required|string',
+                'subtitle' => 'required|string',
+                'founded_year' => 'required|integer|min:1900|max:' . date('Y'), // Validate year
+                'funding' => 'required|string',
+                'location' => 'required|string',
+                'investor' => 'required|string',
+                'stage' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -59,8 +65,15 @@ class PortfolioController extends Controller
             $startupPortfolio->pf_startup_name = $request->pf_startup_name;
             $startupPortfolio->pf_startup_image = $imageUrl;
             $startupPortfolio->pf_startup_url = $request->pf_startup_url;
+            $startupPortfolio->subtitle = $request->subtitle;
+            $startupPortfolio->founded_year = $request->founded_year;
+            $startupPortfolio->funding = $request->funding;
+            $startupPortfolio->location = $request->location;
+            $startupPortfolio->investor = $request->investor;
+            $startupPortfolio->stage = $request->stage;
             $startupPortfolio->save();
 
+            // Return success response
             return response()->json(
                 [
                     'code' => 200,
@@ -73,9 +86,10 @@ class PortfolioController extends Controller
         } catch (\Exception $e) {
             return response()->json(
                 [
+                    'status' => 'error',
                     'message' => $e->getMessage(),
                 ],
-                302,
+                500
             );
         }
     }
