@@ -138,31 +138,36 @@ use Illuminate\Support\Facades\Auth;
                             <span class="title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('admin.users') ? 'active' : '' }}">
+                    <li
+                        class="nav-item {{ Route::is('admin.users') || Route::is('admin.users.show') ? 'active' : '' }}">
                         <a href="{{ route('admin.users') }}" class="nav-link nav-toggle">
                             <i class="fa fa-users"></i>
                             <span class="title">Users</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('admin.news') ? 'active' : '' }}">
+                    <li
+                        class="nav-item {{ Route::is('admin.news') || Route::is('admin.news.create') || Route::is('admin.news.edit') || Route::is('admin.news.show') ? 'active' : '' }}">
                         <a href="{{ route('admin.news') }}" class="nav-link nav-toggle">
                             <i class="fa fa-newspaper-o"></i>
                             <span class="title">News</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('admin.portfolio') ? 'active' : '' }}">
+                    {{-- <li
+                        class="nav-item {{ Route::is('admin.portfolio') || Route::is('admin.portfolio.create') || Route::is('admin.portfolio.show') || Route::is('admin.portfolio.edit') ? 'active' : '' }}">
                         <a href="{{ route('admin.portfolio') }}" class="nav-link nav-toggle">
                             <i class="fa fa-folder-open"></i>
                             <span class="title">Portfolio</span>
                         </a>
-                    </li>
-                    <li class="nav-item {{ Route::is('admin.startups') ? 'active' : '' }}">
+                    </li> --}}
+                    <li
+                        class="nav-item {{ Route::is('admin.startups') || Route::is('admin.startups.create') || Route::is('admin.startups.edit') || Route::is('admin.startups.show') || Route::is('admin.startups.competitors.create') || Route::is('admin.startups.funding_rounds.create') || Route::is('admin.startups.valuations.create') ? 'active' : '' }}">
                         <a href="{{ route('admin.startups') }}" class="nav-link nav-toggle">
                             <i class="fa fa-rocket"></i>
                             <span class="title">Startups</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ Route::is('admin.venture') ? 'active' : '' }}">
+                    <li
+                        class="nav-item {{ Route::is('admin.venture') || Route::is('admin.venture.create') || Route::is('admin.venture.edit') || Route::is('admin.venture.show') ? 'active' : '' }}">
                         <a href="{{ route('admin.venture') }}" class="nav-link nav-toggle">
                             <i class="fa fa-building"></i>
                             <span class="title">Venture Capitals</span>

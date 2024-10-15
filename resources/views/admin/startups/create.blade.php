@@ -61,7 +61,103 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Valuation:<span class="required">*</span></label>
+                                    <label class="col-md-3 col-form-label">Year:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('year', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Founded Year',
+                                            'min' => 1900,
+                                            'max' => date('Y'),
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Location:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Total Funding (USD):<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('total_funding', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Total Funding Amount',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Latest Funding (USD):<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('latest_funding', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Latest Funding Amount',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Latest Investor:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('latest_investor', null, ['class' => 'form-control', 'placeholder' => 'Latest Investor Name']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Total Investors:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('total_investor', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Total Investors Count',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Funding Round:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('funding_round', null, ['class' => 'form-control', 'placeholder' => 'Funding Round']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Post-Money Valuation:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('post_money_valuation', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Post-Money Valuation',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Employee Count:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::number('employee_count', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => 'Number of Employees',
+                                            'min' => 0,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Valuation (USD):<span
+                                            class="required">*</span></label>
                                     <div class="col-md-6">
                                         {!! Form::number('startup_valuation', null, [
                                             'class' => 'form-control',
@@ -72,7 +168,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Equity:<span class="required">*</span></label>
+                                    <label class="col-md-3 col-form-label">Equity (%):<span
+                                            class="required">*</span></label>
                                     <div class="col-md-6">
                                         {!! Form::number('startup_equity', null, [
                                             'class' => 'form-control',
@@ -83,17 +180,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">View Count:</label>
-                                    <div class="col-md-6">
-                                        {!! Form::number('startup_view_count', null, [
-                                            'class' => 'form-control',
-                                            'placeholder' => 'Enter View Count',
-                                            'min' => 0,
-                                        ]) !!}
-                                    </div>
-                                </div> --}}
-
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Startup URL:<span
                                             class="required">*</span></label>
@@ -103,9 +189,33 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Email:<span class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Phone Number:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('phone_number', null, ['class' => 'form-control', 'placeholder' => 'Phone Number']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">First Covered:<span
+                                            class="required">*</span></label>
+                                    <div class="col-md-6">
+                                        {!! Form::date('first_covered', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Image:<span class="required">*</span></label>
                                     <div class="col-md-6">
-                                        <input type="file" name="startup_image" accept="image/*" class="form-control">
+                                        <input type="file" name="startup_image" accept="image/*" class="form-control"
+                                            required>
                                         @error('startup_image')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminPortfolioController;
 use App\Http\Controllers\Admin\AdminStartupController;
 use App\Http\Controllers\Admin\AdminVentureCapitalController;
+use App\Http\Controllers\Admin\AdminCompetitorController;
+use App\Http\Controllers\Admin\AdminValuationController;
+use App\Http\Controllers\Admin\AdminFundingRoundController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,18 @@ Route::post('/admin/startups/store', [AdminStartupController::class, 'store'])->
 Route::get('/admin/startups/{id}/edit', [AdminStartupController::class, 'edit'])->name('admin.startups.edit');
 Route::put('/admin/startups/{id}', [AdminStartupController::class, 'update'])->name('admin.startups.update');
 Route::get('/admin/startups/{id}', [AdminStartupController::class, 'show'])->name('admin.startups.show');
+
+// Startups/Valuations
+Route::get('/admin/startups/{startup_id}/valuations/create', [AdminValuationController::class, 'create'])->name('admin.startups.valuations.create');
+Route::post('/admin/startups/{startup_id}/valuations/store', [AdminValuationController::class, 'store'])->name('admin.startups.valuations.store');
+
+// Startups/Funding Rounds
+Route::get('/admin/startups/{startup_id}/funding-rounds/create', [AdminFundingRoundController::class, 'create'])->name('admin.startups.funding_rounds.create');
+Route::post('/admin/startups/{startup_id}/funding-rounds/store', [AdminFundingRoundController::class, 'store'])->name('admin.startups.funding_rounds.store');
+
+// Startups/Competitors
+Route::get('/admin/startups/{startup_id}/competitors/create', [AdminCompetitorController::class, 'create'])->name('admin.startups.competitors.create');
+Route::post('/admin/startups/{startup_id}/competitors/store', [AdminCompetitorController::class, 'store'])->name('admin.startups.competitors.store');
 
 // Venture Capitals
 Route::get('/admin/venture', [AdminVentureCapitalController::class, 'index'])->name('admin.venture');
