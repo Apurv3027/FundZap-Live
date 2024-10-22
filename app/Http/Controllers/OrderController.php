@@ -21,9 +21,18 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $orders = Order::all();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'totalOrders' => $orders->count(),
+                'data' => $orders,
+            ],
+            200,
+        );
     }
 
     /**

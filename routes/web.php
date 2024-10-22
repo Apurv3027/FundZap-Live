@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminFundingRoundController;
 use App\Http\Controllers\Admin\AdminInvestmentController;
 use App\Http\Controllers\Admin\AdminSectorController;
 use App\Http\Controllers\Admin\AdminCountryController;
+use App\Http\Controllers\Admin\AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,3 +109,7 @@ Route::post('/admin/venture/{venture_capital_id}/portfolios/store', [AdminPortfo
 
 // Verify Email
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
+
+// Users
+Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders');
+Route::get('/admin/orders/{user_id}/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');

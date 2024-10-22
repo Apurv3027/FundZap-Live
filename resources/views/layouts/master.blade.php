@@ -173,21 +173,13 @@ use Illuminate\Support\Facades\Auth;
                             <span class="title">Venture Capitals</span>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="fa fa-cogs"></i>
-                            <span class="title">Settings</span>
-                            <span class="arrow"></span>
+                    <li
+                        class="nav-item {{ Route::is('admin.orders') || Route::is('admin.orders.show') ? 'active' : '' }}">
+                        <a href="{{ route('admin.orders') }}" class="nav-link nav-toggle">
+                            <i class="fa fa-clipboard"></i>
+                            <span class="title">Orders</span>
                         </a>
-                        <ul class="sub-menu">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-wrench"></i>
-                                    <span class="title">General Settings</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> --}}
+                    </li>
                 </ul>
                 <!-- END SIDEBAR MENU -->
             </div>

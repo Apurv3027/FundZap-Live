@@ -108,4 +108,5 @@ Route::post('/add-startup-portfolio', [PortfolioController::class, 'addStartupPo
 
 // Orders
 Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/orders/{user_id}', [OrderController::class, 'show']);

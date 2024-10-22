@@ -10,6 +10,7 @@ use App\Models\News;
 use App\Models\Portfolio;
 use App\Models\Startup;
 use App\Models\VentureCapital;
+use App\Models\Order;
 
 class AdminHomeController extends Controller
 {
@@ -29,7 +30,10 @@ class AdminHomeController extends Controller
         // Get the total number of venture capital
         $totalVentureCapital = VentureCapital::count();
 
-        return view('admin.dashboard.home', compact('totalUsers', 'totalNews', 'totalPortfolio', 'totalStartup', 'totalVentureCapital'));
+        // Get the total number of orders
+        $totalOrders = Order::count();
+
+        return view('admin.dashboard.home', compact('totalUsers', 'totalNews', 'totalPortfolio', 'totalStartup', 'totalVentureCapital', 'totalOrders'));
     }
 
     public function notFound(Request $request){
