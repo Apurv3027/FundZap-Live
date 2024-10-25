@@ -35,6 +35,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Payment Status</th>
                                         <th>Status</th>
                                         <th>Startup Name</th>
                                         <th>Amount</th>
@@ -49,6 +50,7 @@
                 </div>
             </div>
             <!-- END DASHBOARD STATS 1-->
+
         </div>
     </div>
 
@@ -81,6 +83,10 @@
                         name: 'phone'
                     },
                     {
+                        data: 'payment_status',
+                        name: 'payment_status',
+                    },
+                    {
                         data: 'status',
                         name: 'status'
                     },
@@ -99,6 +105,80 @@
                         searchable: false
                     }
                 ]
+            });
+        });
+
+        // Verify Payment Status
+        $(document).on('click', '.verify-payment-status', function() {
+            const orderId = $(this).data('id');
+            const userId = $(this).data('user-id');
+            const button = $(this); // Save reference to the clicked button
+
+            // SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Verify Payment Status',
+                text: "Select the payment status:",
+                icon: 'warning',
+                input: 'select',
+                inputOptions: {
+                    'Accept': 'Accept',
+                    'Reject': 'Reject'
+                },
+                inputPlaceholder: 'Select payment status',
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                preConfirm: (status) => {
+                    if (!status) {
+                        Swal.showValidationMessage('You need to select a payment status');
+                    }
+                    return status;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const selectedStatus = result.value;
+
+                    console.log('User ID:', userId);
+                    console.log('Order ID:', orderId);
+                    console.log('Selected Status:', selectedStatus);
+
+                    $.ajax({
+                        url: '/admin/orders/verify-payment-status/' + userId + '/' + orderId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            payment_status: selectedStatus,
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                }).then(() => {
+                                    location.reload(); // Refresh the page after success
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            let errorMessage = 'Failed to verify payment status.';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage += ' ' + xhr.responseJSON.message;
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: errorMessage,
+                            });
+                        },
+                    });
+                }
             });
         });
     </script>

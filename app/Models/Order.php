@@ -17,6 +17,7 @@ class Order extends Model
         'name',
         'email',
         'phone',
+        'payment_status',
         'status',
         'startup_name',
         'startup_equity',

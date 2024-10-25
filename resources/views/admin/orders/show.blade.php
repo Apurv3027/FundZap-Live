@@ -54,6 +54,23 @@
                                     </div>
 
                                     <div class="form-group row">
+                                        <label class="col-md-3 col-form-label">Payment Status:</label>
+                                        <div class="col-md-6">
+                                            {{-- <p class="form-control-static">{{ $order->payment_status }}</p> --}}
+                                            @if ($order->payment_status === 'Accept')
+                                                <button type="button"
+                                                    class="btn green btn-xs pointerhide cursornone">{{ $order->payment_status }}</button>
+                                            @elseif ($order->payment_status === 'Reject')
+                                                <button type="button"
+                                                    class="btn red btn-xs pointerhide cursornone">{{ $order->payment_status }}</button>
+                                            @else
+                                                <button type="button"
+                                                    class="btn yellow btn-xs pointerhide cursornone">{{ $order->payment_status }}</button>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <label class="col-md-3 col-form-label">Status:</label>
                                         <div class="col-md-6">
                                             <p class="form-control-static">{{ $order->status }}</p>
@@ -77,7 +94,8 @@
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label">Startup Valuation:</label>
                                         <div class="col-md-6">
-                                            <p class="form-control-static">{{ number_format($order->startup_valuation, 2) }}
+                                            <p class="form-control-static">
+                                                {{ number_format($order->startup_valuation, 2) }}
                                                 USD</p>
                                         </div>
                                     </div>

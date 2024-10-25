@@ -113,3 +113,4 @@ Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
 // Users
 Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders');
 Route::get('/admin/orders/{user_id}/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+Route::post('/admin/orders/verify-payment-status/{userId}/{orderId}', [AdminOrderController::class, 'verifyPaymentStatus'])->name('orders.verify-payment-status');

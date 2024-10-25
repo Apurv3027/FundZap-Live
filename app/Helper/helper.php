@@ -99,6 +99,18 @@ class helper
         }
     }
 
+    public static function PaymentStatus($order)
+    {
+        switch ($order->payment_status) {
+            case 'Accept':
+                return '<button type="button" class="btn green btn-xs pointerhide cursornone">Accepted</button>';
+            case 'Reject':
+                return '<button type="button" class="btn red btn-xs pointerhide cursornone">Rejected</button>';
+            default:
+                return '<button type="button" class="btn yellow btn-xs pointerhide cursornone">Pending</button>';
+        }
+    }
+
     public static function Action($editLink = '', $deleteID = '', $viewLink = '', $verifyUserDocumentsLink = '')
     {
         if ($editLink) {
@@ -134,6 +146,37 @@ class helper
         }
 
         return $view . '' . $edit . '' . $delete . '' . $verifyDocuments;
+    }
+
+    public static function OrderAction($editLink = '', $deleteID = '', $viewLink = '', $paymentStatus = '', $userId = '')
+    {
+        if ($editLink) {
+            $edit = '<a href="' . $editLink . '" class="btn btn-xs green"> <i class="fa fa-edit"></i></a>';
+        } else {
+            $edit = '';
+        }
+
+        if ($deleteID) {
+            $delete = '<a id="' . $deleteID . '" class="btn btn-xs red deleterecord"> <i class="fa fa-trash"></i></a>';
+        } else {
+            $delete = '';
+        }
+
+        if ($viewLink) {
+            $view = '<a href="' . $viewLink . '" class="btn btn-xs blue"><i class="fa fa-eye"></i></a>';
+        } else {
+            $view = '';
+        }
+
+        if ($paymentStatus === 'Pending') {
+            $verifyPayment = '<button type="button" data-id="' . $deleteID . '" data-user-id="' . $userId . '" class="btn yellow btn-xs verify-payment-status">Verify Payment</button>';
+        } else if ($paymentStatus === 'Reject') {
+            $verifyPayment = '<button type="button" data-id="' . $deleteID . '" data-user-id="' . $userId . '" class="btn yellow btn-xs verify-payment-status">Verify Payment</button>';
+        } else {
+            $verifyPayment = '';
+        }
+
+        return $view . '' . $edit . '' . $delete . '' . $verifyPayment;
     }
 
     // public static function getAdminData()

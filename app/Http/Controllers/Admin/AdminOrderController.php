@@ -31,16 +31,19 @@ class AdminOrderController extends Controller
                 // dd($orders->toArray());
                 return DataTables::of($orders)
                     ->addIndexColumn()
+                    ->addColumn('payment_status', function ($data) {
+                        return Helper::PaymentStatus($data);
+                    })
                     ->addColumn('action', function ($order) {
                         $editLink = '';
                         $viewLink = URL::to('/') . '/admin/orders/' . $order->user_id . '/' . $order->id;
 
-                        return Helper::Action($editLink, $order->user_id, $viewLink);
+                        return Helper::OrderAction($editLink, $order->id, $viewLink, $order->payment_status, $order->user_id);
                     })
                     ->editColumn('phone', function ($order) {
                         return $order->phone ?: '-';
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['payment_status', 'action'])
                     ->make(true);
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 500);
@@ -104,5 +107,34 @@ class AdminOrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function verifyPaymentStatus(Request $request, $userId, $orderId)
+    {
+        $request->validate([
+            'payment_status' => 'required|in:Accept,Reject',
+        ]);
+
+        $order = Order::where('user_id', $userId)->where('id', $orderId)->first();
+
+        // Check if the order exists and belongs to the user
+        if (!$order) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Order not found or does not belong to this user.',
+                ],
+                404,
+            );
+        }
+
+        // Update the payment status of the order
+        $order->payment_status = $request->payment_status;
+        $order->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment status updated successfully to ' . $request->payment_status . '.',
+        ]);
     }
 }
