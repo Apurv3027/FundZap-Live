@@ -41,8 +41,17 @@ Route::post('/upload-user-image', [AuthController::class, 'uploadImage']);
 // Register User
 Route::post('/register', [AuthController::class, 'registerUser']);
 
+// Get All User Documents
+Route::get('/get-all-user-documents', [UserDocumentsController::class, 'getAllUserDocuments']);
+
+// Unverified User Documents
+Route::get('/users/unverified-documents', [UserDocumentsController::class, 'getUnverifiedDocuments']);
+
 // Upload User Documents
 Route::post('/upload-user-documents', [UserDocumentsController::class, 'uploadDocuments']);
+
+// Verify User Documents
+Route::post('/users/{id}/verify-documents', [UserDocumentsController::class, 'verifyDocuments']);
 
 // Verify Email
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);

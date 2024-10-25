@@ -20,6 +20,53 @@ use DateTime;
 
 class UserDocumentsController extends Controller
 {
+    public function getAllUserDocuments()
+    {
+        try {
+            // Retrieve user documents
+            $userDocuments = User::with('documents')->get();
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $userDocuments,
+                ],
+                200,
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'message' => $e->getMessage(),
+                ],
+                302,
+            );
+        }
+    }
+
+    public function getUnverifiedDocuments()
+    {
+        // Fetch users with unverified documents
+        $unverifiedUsers = User::where('document_verified', false)->whereHas('documents')->with('documents')->get();
+
+        if ($unverifiedUsers->isEmpty()) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'No unverified documents found.',
+                ],
+                404,
+            );
+        }
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $unverifiedUsers,
+            ],
+            200,
+        );
+    }
+
     public function uploadDocuments(Request $request)
     {
         try {
@@ -112,6 +159,39 @@ class UserDocumentsController extends Controller
                     'message' => $e->getMessage(),
                 ],
                 302,
+            );
+        }
+    }
+
+    public function verifyDocuments(Request $request, $id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Retrieve user documents
+        $userDocuments = UserDocuments::where('user_id', $id)->first();
+
+        if ($userDocuments) {
+            // Update user's mobile number
+            $user->mobile_number = $userDocuments->phone_number;
+
+            $user->document_verified = true;
+            $user->save();
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Documents verified successfully.',
+                ],
+                200,
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'No documents found for this user.',
+                ],
+                404,
             );
         }
     }
