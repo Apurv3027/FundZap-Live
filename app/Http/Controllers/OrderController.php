@@ -130,4 +130,35 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function verifyPaymentStatus(Request $request, $userId, $orderId)
+    {
+        $request->validate([
+            'payment_status' => 'required|in:Accept,Reject',
+        ]);
+
+        // Fetch the order for the specific user
+        $order = Order::where('user_id', $userId)->where('id', $orderId)->first();
+
+        // Check if the order exists and belongs to the user
+        if (!$order) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Order not found or does not belong to this user.',
+                ],
+                404
+            );
+        }
+
+        // Update the payment status of the order
+        $order->payment_status = $request->payment_status;
+        $order->save();
+
+        // Return a success response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment status updated successfully to ' . $request->payment_status . '.',
+        ]);
+    }
 }

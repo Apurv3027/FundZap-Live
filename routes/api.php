@@ -41,18 +41,6 @@ Route::post('/upload-user-image', [AuthController::class, 'uploadImage']);
 // Register User
 Route::post('/register', [AuthController::class, 'registerUser']);
 
-// Get All User Documents
-Route::get('/get-all-user-documents', [UserDocumentsController::class, 'getAllUserDocuments']);
-
-// Unverified User Documents
-Route::get('/users/unverified-documents', [UserDocumentsController::class, 'getUnverifiedDocuments']);
-
-// Upload User Documents
-Route::post('/upload-user-documents', [UserDocumentsController::class, 'uploadDocuments']);
-
-// Verify User Documents
-Route::post('/users/{id}/verify-documents', [UserDocumentsController::class, 'verifyDocuments']);
-
 // Verify Email
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail']);
 
@@ -65,11 +53,14 @@ Route::post('/check_email', [ForgotPasswordController::class, 'checkEmail']);
 // Reset Password
 Route::post('/reset_password', [ForgotPasswordController::class, 'resetPassword']);
 
-
 // Home API
 Route::get('/home', [HomeController::class, 'getHomeData']);
 
-
+// User Documents
+Route::get('/get-all-user-documents', [UserDocumentsController::class, 'getAllUserDocuments']);
+Route::get('/users/unverified-documents', [UserDocumentsController::class, 'getUnverifiedDocuments']);
+Route::post('/upload-user-documents', [UserDocumentsController::class, 'uploadDocuments']);
+Route::post('/users/{id}/verify-documents', [UserDocumentsController::class, 'verifyDocuments']);
 
 // News APIs
 Route::get('/news', [NewsController::class, 'getAllNews']);    // Get all News
@@ -116,6 +107,7 @@ Route::post('/add-startup-portfolio', [PortfolioController::class, 'addStartupPo
 
 
 // Orders
-Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders', [OrderController::class, 'index']);
+Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/{user_id}', [OrderController::class, 'show']);
+Route::post('/orders/verify-payment-status/{user_id}/{order_id}', [OrderController::class, 'verifyPaymentStatus']);
