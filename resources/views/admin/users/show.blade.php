@@ -171,6 +171,89 @@
                                             <div class="alert alert-warning" role="alert">
                                                 User's documents are not verified.
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">First Name:</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static">{{ $document->first_name }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Last Name:</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static">{{ $document->last_name }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Phone Number:</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static">{{ $document->phone_number }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Pin Code:</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static">{{ $document->pin_code }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">City:</label>
+                                                <div class="col-md-6">
+                                                    <p class="form-control-static">{{ $document->city }}</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Display Selfie Photo -->
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Selfie Photo:</label>
+                                                <div class="col-md-6">
+                                                    @if ($document->selfie_photo)
+                                                        <img src="{{ asset($document->selfie_photo) }}"
+                                                            alt="Selfie Photo" style="max-height: 150px;">
+                                                    @else
+                                                        <p>No selfie photo available.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <!-- Display Aadhar Front Image -->
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Aadhar Front:</label>
+                                                <div class="col-md-6">
+                                                    @if ($document->aadhar_front_image)
+                                                        <img src="{{ asset($document->aadhar_front_image) }}"
+                                                            alt="Selfie Photo" style="max-height: 150px;">
+                                                    @else
+                                                        <p>No aadhar front image available.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <!-- Display Aadhar Back Image -->
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Aadhar Back:</label>
+                                                <div class="col-md-6">
+                                                    @if ($document->aadhar_back_image)
+                                                        <img src="{{ asset($document->aadhar_back_image) }}"
+                                                            alt="Selfie Photo" style="max-height: 150px;">
+                                                    @else
+                                                        <p>No aadhar back image available.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <!-- Display PAN Card Image -->
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">PAN Card Image:</label>
+                                                <div class="col-md-6">
+                                                    @if ($document->pan_card_image)
+                                                        <img src="{{ asset($document->pan_card_image) }}"
+                                                            alt="Selfie Photo" style="max-height: 150px;">
+                                                    @else
+                                                        <p>No pan card image available.</p>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         @endif
                                     @endforeach
                                 @else

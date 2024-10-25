@@ -26,9 +26,12 @@ class AdminUserController extends Controller
         $user = User::findOrFail($id);
 
         // Check if the user has documents in the UserDocuments table
-        $userDocuments = UserDocuments::where('user_id', $id)->exists();
+        $userDocuments = UserDocuments::where('user_id', $id)->first();
 
         if ($userDocuments) {
+            // Update user's mobile number from user documents' phone number
+            $user->mobile_number = $userDocuments->phone_number;
+
             // If documents exist, verify the user
             $user->document_verified = true;
             $user->save();
