@@ -14,7 +14,8 @@ use App\Models\Order;
 
 class AdminHomeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         // Get the total number of users
         $totalUsers = User::count();
 
@@ -33,18 +34,24 @@ class AdminHomeController extends Controller
         // Get the total number of orders
         $totalOrders = Order::count();
 
-        return view('admin.dashboard.home', compact('totalUsers', 'totalNews', 'totalPortfolio', 'totalStartup', 'totalVentureCapital', 'totalOrders'));
+        // Fetch user registration count per month for the current year
+        $userRegistrations = User::selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as day, COUNT(*) as count")->groupBy('day')->orderBy('day')->get();
+
+        return view('admin.dashboard.home', compact('totalUsers', 'totalNews', 'totalPortfolio', 'totalStartup', 'totalVentureCapital', 'totalOrders', 'userRegistrations'));
     }
 
-    public function notFound(Request $request){
+    public function notFound(Request $request)
+    {
         return view('admin.errors.404');
     }
 
-    public function exceptions(Request $request){
+    public function exceptions(Request $request)
+    {
         return view('admin.errors.500');
     }
 
-    public function unauthorized(Request $request){
+    public function unauthorized(Request $request)
+    {
         return view('admin.errors.401');
     }
 }

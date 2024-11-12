@@ -120,11 +120,11 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-bar-chart font-green-haze"></i>
-                                <span class="caption-subject bold uppercase"> Sales Overview</span>
+                                <span class="caption-subject bold uppercase"> User Registration Overview</span>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div id="sales_chart" style="height: 350px;"></div>
+                            <div id="userRegistrationChart" style="height: 350px;"></div>
                         </div>
                     </div>
                     <!-- END SAMPLE CHART PORTLET-->
@@ -159,39 +159,21 @@
         $(function() {
             // Initialize sales chart
             Morris.Area({
-                element: 'sales_chart',
-                data: [{
-                        y: '2024-01',
-                        sales: 100
-                    },
-                    {
-                        y: '2024-02',
-                        sales: 75
-                    },
-                    {
-                        y: '2024-03',
-                        sales: 50
-                    },
-                    {
-                        y: '2024-04',
-                        sales: 75
-                    },
-                    {
-                        y: '2024-05',
-                        sales: 50
-                    },
-                    {
-                        y: '2024-06',
-                        sales: 75
-                    },
-                    {
-                        y: '2024-07',
-                        sales: 100
-                    }
-                ],
-                xkey: 'y',
-                ykeys: ['sales'],
-                labels: ['sales'],
+                element: 'userRegistrationChart',
+                data: @json($userRegistrations),
+                xkey: 'day',
+                ykeys: ['count'],
+                labels: ['Registrations'],
+                xLabels: 'day',
+                hideHover: 'auto',
+                resize: true,
+                lineColors: ['#36c6d3'],
+                fillOpacity: 0.5,
+                pointFillColors: ['#f39c12'],
+                pointStrokeColors: ['#333'],
+                lineWidth: 5,
+                parseTime: false,
+                smooth: true,
             });
 
             // Initialize user statistics chart
